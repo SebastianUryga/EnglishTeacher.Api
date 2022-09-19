@@ -19,6 +19,7 @@
   </ItemGroup>
 	
   <ItemGroup>
+    <ProjectReference Include="..\EnglishTeacher.Application\EnglishTeacher.Application.csproj" />
     <ProjectReference Include="..\EnglishTeacher.Common\EnglishTeacher.Common.csproj" />
     <ProjectReference Include="..\EnglishTeacher.Domain\EnglishTeacher.Domain.csproj" />
   </ItemGroup>

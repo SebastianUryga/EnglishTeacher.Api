@@ -1,4 +1,4 @@
-﻿using EnglishTeacher.Common.Interfaces;
+﻿using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,4 @@
-﻿namespace EnglishTeacher.Common.Interfaces
+﻿namespace EnglishTeacher.Application.Common.Interfaces
 {
     public interface IDateTime
     {

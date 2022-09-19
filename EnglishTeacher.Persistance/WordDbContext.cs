@@ -1,4 +1,4 @@
-﻿using EnglishTeacher.Common.Interfaces;
+﻿using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Domain.Common;
 using EnglishTeacher.Domain.Entities;
 using Microsoft.EntityFrameworkCore;

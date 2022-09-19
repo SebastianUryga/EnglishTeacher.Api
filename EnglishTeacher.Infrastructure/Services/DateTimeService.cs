@@ -1,4 +1,4 @@
-﻿using EnglishTeacher.Common.Interfaces;
+﻿using EnglishTeacher.Application.Common.Interfaces;
 
 namespace EnglishTeacher.Infrastructure.Services
 {
