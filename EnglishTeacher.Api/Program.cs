@@ -11,7 +11,6 @@ builder =>
 {
     builder.AllowAnyOrigin();
 }));
-
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddControllers();

@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace EnglishTeacher.Persistance
 {
-    public class WordDbContext : DbContext
+    public class WordDbContext : DbContext, IWordDbContext
     {
         private readonly IDateTime _dateTime;
 

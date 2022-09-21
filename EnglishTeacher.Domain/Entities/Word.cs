@@ -9,7 +9,7 @@ namespace EnglishTeacher.Domain.Entities
 
         public int WrongAnswers { get; set; }
         public int CorrectAnswers { get; set; }
-        public DateTime LastAnswer { get; set; }
+        public DateTime? LastAnswer { get; set; }
     }
 
     
