@@ -12,9 +12,11 @@ namespace EnglishTeacher.Persistance
     public abstract class DesignTimeDbContextFactoryBase<TContext>
         : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
+        private const string AspNetCoreEnvirioment = "ASPNETCORE_ENVIRONMENT";
         public TContext CreateDbContext(string[] args)
         {
-            throw new NotImplementedException();
+            var basePath = Directory.GetCurrentDirectory() + String.Format($"{0}..{0}EnglishTeacher", Path.DirectorySeparatorChar);
+            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvirioment));
         }
         private TContext Create(string basePath, string environmentName)
         {

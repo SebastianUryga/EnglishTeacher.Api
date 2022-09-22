@@ -1,5 +1,6 @@
 ﻿using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Domain.Entities;
+using EnglishTeacher.Domain.ValueObjects;
 using MediatR;
 
 namespace EnglishTeacher.Application.Words.Command.CreateWord
@@ -19,9 +20,13 @@ namespace EnglishTeacher.Application.Words.Command.CreateWord
             {
                 EnglishText = request.EnglishText,
                 PolishText = request.PolishText,
-                WrongAnswers = 0,
-                CorrectAnswers = 0,
-                LastAnswer = null,
+                //TODO: check if these values will be added by default
+                AnsweringStatistics = new AnsweringStatistics()
+                {
+                    WrongAnswers = 0,
+                    CorrectAnswers = 0,
+                    LastAnswer = null,
+                }
             };
             _context.Words.Add(word);
 

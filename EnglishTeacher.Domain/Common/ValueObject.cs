@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EnglishTeacher.Domain.ValueObjects
+﻿namespace EnglishTeacher.Domain.Common
 {
     public abstract class ValueObject
     {
@@ -19,7 +13,7 @@ namespace EnglishTeacher.Domain.ValueObjects
 
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)
         {
-            return !(EqualOperator(left, right));
+            return !EqualOperator(left, right);
         }
 
         protected abstract IEnumerable<object> GetEqualityComponents();
@@ -33,7 +27,7 @@ namespace EnglishTeacher.Domain.ValueObjects
 
             var other = (ValueObject)obj;
 
-            return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+            return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
         }
 
         public override int GetHashCode()

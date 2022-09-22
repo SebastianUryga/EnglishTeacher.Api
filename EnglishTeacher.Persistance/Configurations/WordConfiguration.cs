@@ -1,4 +1,5 @@
 ﻿using EnglishTeacher.Domain.Entities;
+using EnglishTeacher.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,8 +10,15 @@ namespace EnglishTeacher.Persistance.Configurations
     {
         public void Configure(EntityTypeBuilder<Word> builder)
         {
-            builder.Property(p => p.CorrectAnswers).HasDefaultValue(0);
-            builder.Property(p => p.LastAnswer).HasDefaultValue(null);
+            builder.OwnsOne(p => p.AnsweringStatistics).Property(p => p.CorrectAnswers)
+                .HasColumnName("CorrectAnswers")
+                .HasDefaultValue(0);
+            builder.OwnsOne(p => p.AnsweringStatistics).Property(p => p.WrongAnswers)
+                .HasColumnName("WrongAnswers")
+                .HasDefaultValue(0);
+            builder.OwnsOne(p => p.AnsweringStatistics).Property(p => p.LastAnswer)
+                .HasColumnName("LastAnswer")
+                .HasDefaultValue(null);
         }
     }
 }

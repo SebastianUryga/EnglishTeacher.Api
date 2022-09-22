@@ -1,4 +1,5 @@
 ﻿using EnglishTeacher.Domain.Common;
+using EnglishTeacher.Domain.ValueObjects;
 
 namespace EnglishTeacher.Domain.Entities
 {
@@ -6,12 +7,6 @@ namespace EnglishTeacher.Domain.Entities
     {
         public string PolishText { get; set; }
         public string EnglishText { get; set; }
-
-        public int WrongAnswers { get; set; }
-        public int CorrectAnswers { get; set; }
-        public DateTime? LastAnswer { get; set; }
+        public AnsweringStatistics AnsweringStatistics { get; set; }
     }
-
-    
-
 }
