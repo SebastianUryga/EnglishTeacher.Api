@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EnglishTeacher.Application.Words.Command.CreateWord;
+using EnglishTeacher.Application.Words.Query.GetWordDetail;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishTeacher.Api.Controllers
 {
     [Route("api/words")]
-    [ApiController]
-    public class WordsController : ControllerBase
+    public class WordsController : BaseController
     {
         public WordsController()
         {
@@ -28,18 +29,18 @@ namespace EnglishTeacher.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/{id}")]
-        public async Task<ActionResult<WordDto>> GetWord(Guid id)
+        [Route("{id}")]
+        public async Task<ActionResult<WordDetialVm>> GetWord(int id)
         {
-            await Task.FromResult(Task.CompletedTask);
-            return new WordDto();
+            var vm = await Mediator.Send(new GetWordDetailQuery() { WordId = id });
+            return vm;
         }
 
         [HttpPost]
-        public async Task<ActionResult<WordDto>> AddWord()
+        public async Task<IActionResult> AddWord(CreateWordCommand command)
         {
-            await Task.FromResult(Task.CompletedTask);
-            return new WordDto();
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
     }
 }
