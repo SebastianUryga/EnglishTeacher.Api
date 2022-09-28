@@ -2,8 +2,15 @@ using EnglishTeacher.Persistance;
 using EnglishTeacher.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using EnglishTeacher.Application;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddCors(options =>
@@ -35,19 +42,35 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Information("Application is starting up");
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+    app.UseHealthChecks("/hc");
+    app.UseHttpsRedirection();
+
+    app.UseSerilogRequestLogging();
+
+    app.UseCors();
+    app.UseRouting();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-app.UseHealthChecks("/hc");
-app.UseHttpsRedirection();
+catch(Exception ex)
+{
+    Log.Fatal(ex, "Application couldn't start up");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
 
-app.UseCors();
-app.UseRouting();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

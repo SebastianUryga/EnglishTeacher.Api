@@ -23,7 +23,7 @@ namespace EnglishTeacher.Application.Behaviours
                 
                 if(failurers.Any())
                 {
-                    throw new Exception();
+                    throw new ValidationException(failurers);
                 }
             }
             return await next();

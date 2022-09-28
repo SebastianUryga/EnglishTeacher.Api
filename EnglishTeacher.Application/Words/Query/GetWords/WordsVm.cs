@@ -1,7 +1,15 @@
-﻿namespace EnglishTeacher.Application.Words.Query.GetWords
+﻿using EnglishTeacher.Application.Common.Mappings;
+
+namespace EnglishTeacher.Application.Words.Query.GetWords
 {
-    public class WordsVm
+    public class WordsVm : IMapForm<ICollection<WordDto>>
     {
-        ICollection<WordDto> Words { get; set; }
+        public ICollection<WordDto> Words { get; set; }
+
+        public void Mapping(MappingProfile profile)
+        {
+            profile.CreateMap<ICollection<WordDto>, WordsVm>()
+                .ForMember(dst => dst.Words, map => map.MapFrom(src => src));
+        }
     }
 }

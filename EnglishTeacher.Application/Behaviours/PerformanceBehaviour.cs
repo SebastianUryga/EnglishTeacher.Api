@@ -28,7 +28,7 @@ namespace EnglishTeacher.Application.Behaviours
             {
                 var requestName = typeof(TRequest).Name;
 
-                _logger.LogInformation("MovieManagement Long Running Request: {Name} ({elapsed} milliseconds) {@Request}",
+                _logger.LogInformation("EnglishTeacher Long Running Request: {Name} ({elapsed} milliseconds) {@Request}",
                     requestName, elapsed, request);
             }
 

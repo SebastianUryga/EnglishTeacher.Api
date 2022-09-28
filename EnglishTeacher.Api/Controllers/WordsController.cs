@@ -1,5 +1,7 @@
 ﻿using EnglishTeacher.Application.Words.Command.CreateWord;
+using EnglishTeacher.Application.Words.Command.DeleteWord;
 using EnglishTeacher.Application.Words.Query.GetWordDetail;
+using EnglishTeacher.Application.Words.Query.GetWords;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +16,10 @@ namespace EnglishTeacher.Api.Controllers
         }
         [HttpGet]
         [Route("list")]
-        public async Task<ActionResult<List<WordDto>>> GetList()
+        public async Task<ActionResult<WordsVm>> GetList()
         {
-            await Task.FromResult(Task.CompletedTask);
-            return new List<WordDto>();
+            var vm = await Mediator.Send(new GetWordsQuery());
+            return vm;
         }
 
         [HttpGet]
@@ -41,6 +43,13 @@ namespace EnglishTeacher.Api.Controllers
         {
             var result = await Mediator.Send(command);
             return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteWord(int id)
+        {
+            var resut = await Mediator.Send(new DeleteWordCommand() { WordId = id });
+            return Ok(resut);
         }
     }
 }
