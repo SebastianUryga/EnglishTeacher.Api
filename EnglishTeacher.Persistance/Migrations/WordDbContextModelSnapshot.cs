@@ -17,7 +17,7 @@ namespace EnglishTeacher.Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -33,11 +33,21 @@ namespace EnglishTeacher.Persistance.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Inactivated")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("InactivatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Modified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
@@ -59,7 +69,8 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 9, 22, 13, 23, 16, 417, DateTimeKind.Local).AddTicks(7169),
+                            Created = new DateTime(2022, 9, 30, 17, 10, 47, 698, DateTimeKind.Local).AddTicks(5642),
+                            CreatedBy = "Admin",
                             StatusId = 1,
                             Text = "text",
                             WordId = 1
@@ -67,7 +78,8 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 9, 22, 13, 23, 16, 417, DateTimeKind.Local).AddTicks(7178),
+                            Created = new DateTime(2022, 9, 30, 17, 10, 47, 698, DateTimeKind.Local).AddTicks(5661),
+                            CreatedBy = "Adnim",
                             StatusId = 1,
                             Text = "text 2",
                             WordId = 1
@@ -85,6 +97,10 @@ namespace EnglishTeacher.Persistance.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EnglishText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -92,8 +108,14 @@ namespace EnglishTeacher.Persistance.Migrations
                     b.Property<DateTime?>("Inactivated")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("InactivatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Modified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PolishText")
                         .IsRequired()
@@ -110,7 +132,8 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 9, 22, 13, 23, 16, 417, DateTimeKind.Local).AddTicks(6925),
+                            Created = new DateTime(2022, 9, 30, 17, 10, 47, 698, DateTimeKind.Local).AddTicks(5218),
+                            CreatedBy = "Admin",
                             EnglishText = "Do",
                             PolishText = "robić",
                             StatusId = 1

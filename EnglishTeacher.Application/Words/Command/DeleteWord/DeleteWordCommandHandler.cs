@@ -1,4 +1,5 @@
-﻿using EnglishTeacher.Application.Common.Interfaces;
+﻿using EnglishTeacher.Application.Common.Exceptions;
+using EnglishTeacher.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,14 @@ namespace EnglishTeacher.Application.Words.Command.DeleteWord
         {
             var word = await _context.Words.Where(p => p.Id == request.WordId).FirstOrDefaultAsync(cancellationToken);
 
-            _context.Words.Remove(word);
+            try
+            {
+                _context.Words.Remove(word);
+            }
+            catch (Exception ex)
+            {
+                throw new WordNotFoundException(request.WordId, ex);
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
 
