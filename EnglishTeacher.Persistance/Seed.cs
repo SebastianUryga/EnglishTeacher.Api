@@ -16,6 +16,7 @@ namespace EnglishTeacher.Persistance
                     Id = 1,
                     StatusId = 1,
                     Created = DateTime.Now,
+                    CreatedBy = "Admin",
                     EnglishText = "Do",
                     PolishText = "robić",
                 });
@@ -24,8 +25,8 @@ namespace EnglishTeacher.Persistance
             builder.Entity<Sentence>(data =>
             {
                 data.HasData(
-                    new Sentence() { Id = 1, StatusId = 1, Created = DateTime.Now, WordId = 1, Text = "text" },
-                    new Sentence() { Id = 2, StatusId = 1, Created = DateTime.Now, WordId = 1, Text = "text 2" }
+                    new Sentence() { Id = 1, StatusId = 1, Created = DateTime.Now, CreatedBy = "Admin", WordId = 1, Text = "text" },
+                    new Sentence() { Id = 2, StatusId = 1, Created = DateTime.Now, CreatedBy = "Adnim", WordId = 1, Text = "text 2" }
                 );
             });
         }

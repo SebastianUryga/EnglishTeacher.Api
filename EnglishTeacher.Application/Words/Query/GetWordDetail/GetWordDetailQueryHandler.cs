@@ -9,12 +9,14 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
     public class GetWordDetailQueryHandler : IRequestHandler<GetWordDetailQuery, WordDetialVm>
     {
         private readonly IWordDbContext _context;
-        private readonly IMapper _mapper;
+        private IMapper _mapper;
+        private readonly ICurrentUserService _userService;
 
-        public GetWordDetailQueryHandler(IWordDbContext wordDbContext, IMapper mapper)
+        public GetWordDetailQueryHandler(IWordDbContext wordDbContext, IMapper mapper, ICurrentUserService userService)
         {
             _context = wordDbContext;
             _mapper = mapper;
+            _userService = userService;
         }
         public async Task<WordDetialVm> Handle(GetWordDetailQuery request, CancellationToken cancellationToken)
         {
