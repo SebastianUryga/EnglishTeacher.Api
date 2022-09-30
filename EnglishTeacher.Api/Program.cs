@@ -3,9 +3,6 @@ using EnglishTeacher.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using EnglishTeacher.Application;
 using Serilog;
-using EnglishTeacher.Application.Common.Interfaces;
-using EnglishTeacher.Api.Service;
-using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,18 +19,6 @@ builder =>
 {
     builder.AllowAnyOrigin();
 }));
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
-    {
-        options.Authority = "https://localhost:5001";
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-        {
-            ValidateAudience = false
-        };
-    });
-
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplication();
@@ -55,15 +40,6 @@ builder.Services.AddSwaggerGen(x =>
 
 builder.Services.AddHealthChecks();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("ApiScope", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "api1");
-    });
-});
-
 var app = builder.Build();
 
 try
@@ -79,14 +55,13 @@ try
     app.UseHealthChecks("/hc");
     app.UseHttpsRedirection();
 
-    app.UseAuthentication();
     app.UseSerilogRequestLogging();
 
     app.UseCors();
     app.UseRouting();
     app.UseAuthorization();
 
-    app.MapControllers().RequireAuthorization("ApiScope");
+    app.MapControllers();
 
     app.Run();
 }
