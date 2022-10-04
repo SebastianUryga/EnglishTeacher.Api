@@ -6,6 +6,8 @@ using Serilog;
 using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Api.Service;
 using Microsoft.AspNetCore.Http;
+using Microsoft.OpenApi.Models;
+using EnglishTeacher.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +44,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x =>
 {
+    x.AddSecurityDefinition("bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow()
+            {
+                AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
+                TokenUrl = new Uri("https://localhost:5001/connect/token"),
+                Scopes = new Dictionary<string, string>
+                {
+                    {"api1", "Full access" },
+                    {"user", "User info"}
+                }
+            }
+        }
+    });
+    x.OperationFilter<AuthorizeCheckOperationFilter>();
     x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Description = "Description",
@@ -74,7 +94,13 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "EnglishTeacher v1");
+            c.OAuthClientId("swagger");
+            c.OAuth2RedirectUrl("https://localhost:7168/swagger/oauth2-redirect.html");
+            c.OAuthUsePkce();
+        });
     }
     app.UseHealthChecks("/hc");
     app.UseHttpsRedirection();

@@ -3,17 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnglishTeacher.Api", "EnglishTeacher.Api\EnglishTeacher.Api.csproj", "{806B233A-A5B6-4992-8BBD-1865BE896DA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Api", "EnglishTeacher.Api\EnglishTeacher.Api.csproj", "{806B233A-A5B6-4992-8BBD-1865BE896DA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnglishTeacher.Persistance", "EnglishTeacher.Persistance\EnglishTeacher.Persistance.csproj", "{5E08AF54-2C8A-4C96-AE3B-E12FA31BE500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Persistance", "EnglishTeacher.Persistance\EnglishTeacher.Persistance.csproj", "{5E08AF54-2C8A-4C96-AE3B-E12FA31BE500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnglishTeacher.Infrastructure", "EnglishTeacher.Infrastructure\EnglishTeacher.Infrastructure.csproj", "{9CA590E0-A800-4202-B5C6-0502D035852D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Infrastructure", "EnglishTeacher.Infrastructure\EnglishTeacher.Infrastructure.csproj", "{9CA590E0-A800-4202-B5C6-0502D035852D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnglishTeacher.Domain", "EnglishTeacher.Domain\EnglishTeacher.Domain.csproj", "{0A0FEE2D-32EB-4114-96F9-2A13677EF8EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Domain", "EnglishTeacher.Domain\EnglishTeacher.Domain.csproj", "{0A0FEE2D-32EB-4114-96F9-2A13677EF8EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnglishTeacher.Application", "EnglishTeacher.Application\EnglishTeacher.Application.csproj", "{EDDC7109-CAB0-4DBD-B114-4552ACB44077}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Application", "EnglishTeacher.Application\EnglishTeacher.Application.csproj", "{EDDC7109-CAB0-4DBD-B114-4552ACB44077}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnglishTeacher.Common", "EnglishTeacher.Common\EnglishTeacher.Common.csproj", "{156A17B2-78B7-495F-B2E7-598D150E8B56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Common", "EnglishTeacher.Common\EnglishTeacher.Common.csproj", "{156A17B2-78B7-495F-B2E7-598D150E8B56}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8073C7C1-B5EA-47FF-A661-2686FB2A30D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "Application.UnitTests\Application.UnitTests.csproj", "{E9215A17-8F5A-4E26-85AF-E09603E57D06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +49,16 @@ Global
 		{156A17B2-78B7-495F-B2E7-598D150E8B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{156A17B2-78B7-495F-B2E7-598D150E8B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{156A17B2-78B7-495F-B2E7-598D150E8B56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9215A17-8F5A-4E26-85AF-E09603E57D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9215A17-8F5A-4E26-85AF-E09603E57D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9215A17-8F5A-4E26-85AF-E09603E57D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9215A17-8F5A-4E26-85AF-E09603E57D06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9215A17-8F5A-4E26-85AF-E09603E57D06} = {8073C7C1-B5EA-47FF-A661-2686FB2A30D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19094A9D-34AA-4F60-BB4D-148ADCC55B35}

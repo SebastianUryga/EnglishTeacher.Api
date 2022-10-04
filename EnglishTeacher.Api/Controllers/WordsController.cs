@@ -2,19 +2,24 @@
 using EnglishTeacher.Application.Words.Command.DeleteWord;
 using EnglishTeacher.Application.Words.Query.GetWordDetail;
 using EnglishTeacher.Application.Words.Query.GetWords;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishTeacher.Api.Controllers
 {
     [Route("api/words")]
+    [Authorize]
     public class WordsController : BaseController
     {
         public WordsController()
         {
 
         }
+
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("list")]
         public async Task<ActionResult<WordsVm>> GetList()
         {
@@ -30,7 +35,10 @@ namespace EnglishTeacher.Api.Controllers
             return new WordDto();
         }
 
+
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("{id}")]
         public async Task<ActionResult<WordDetialVm>> GetWord(int id)
         {

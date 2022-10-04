@@ -46,6 +46,8 @@ namespace IdentityServer
                     ClientName = "Client for Swagger user",
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     ClientSecrets = {new Secret("secret".Sha256())},
+                    AllowedScopes = {"api1", "user", "openid"},
+                    AlwaysSendClientClaims = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AllowAccessTokensViaBrowser = true,
                     RedirectUris = {"https://localhost:7168/swagger/oauth2-redirect.html"},
