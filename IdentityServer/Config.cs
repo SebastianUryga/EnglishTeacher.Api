@@ -47,6 +47,7 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     ClientSecrets = {new Secret("secret".Sha256())},
                     AllowedScopes = {"api1", "user", "openid"},
+                    RequirePkce = false,
                     AlwaysSendClientClaims = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AllowAccessTokensViaBrowser = true,

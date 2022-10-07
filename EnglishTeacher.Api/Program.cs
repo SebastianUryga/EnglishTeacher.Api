@@ -1,13 +1,18 @@
 using EnglishTeacher.Persistance;
 using EnglishTeacher.Infrastructure;
-using Microsoft.Extensions.Configuration;
 using EnglishTeacher.Application;
+using IdentityModel;
 using Serilog;
 using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Api.Service;
-using Microsoft.AspNetCore.Http;
-using Microsoft.OpenApi.Models;
 using EnglishTeacher.Api;
+using EnglishTeacher.Infrastructure.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Test;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,15 +23,55 @@ Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).Cre
 builder.Host.UseSerilog();
 
 // Add services to the container.
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddPersistance(builder.Configuration);
+builder.Services.AddApplication();
+builder.Services.AddControllers();
 builder.Services.AddCors(options =>
-options.AddPolicy(name: "myPolicy",
-builder =>
+options.AddPolicy(name: "AllowAll",
+policy =>
 {
-    builder.AllowAnyOrigin();
+    policy.AllowAnyOrigin();
 }));
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
-builder.Services.AddAuthentication("Bearer")
+if (builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("WordDatabase")));
+
+    builder.Services.AddDefaultIdentity<ApplicationUser>()
+        .AddEntityFrameworkStores<ApplicationDbContext>();
+    builder.Services.AddIdentityServer()
+        .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+         {
+             options.ApiResources.Add(new ApiResource("api1"));
+             options.ApiScopes.Add(new ApiScope("api1"));
+             options.Clients.Add(new Client
+             {
+                 ClientId = "client",
+                 AllowedGrantTypes = { GrantType.ResourceOwnerPassword },
+                 ClientSecrets = { new Secret("secret".Sha256()) },
+                 AllowedScopes = { "openid", "profile", "EnglishTeacher.ApiAPI", "api1" }
+             });
+         }).AddTestUsers(new List<TestUser>
+         {
+             new TestUser
+             {
+                SubjectId = "4B434A88-212D-4A4D-A17C-F35102D73CBB",
+                Username = "alice",
+                Password = "Pass123$",
+                Claims = new List<Claim>
+                {
+                    new Claim(JwtClaimTypes.Email, "alice@user.com"),
+                    new Claim(ClaimTypes.Name, "alice")
+                }
+             }
+         });
+    builder.Services.AddAuthentication("Bearer")
+        .AddIdentityServerJwt();
+}
+else
+{
+    builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
         options.Authority = "https://localhost:5001";
@@ -35,11 +80,19 @@ builder.Services.AddAuthentication("Bearer")
             ValidateAudience = false
         };
     });
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("ApiScope", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim("scope", "api1");
+        });
+    });
+}
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
 
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddPersistance(builder.Configuration);
-builder.Services.AddApplication();
-builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x =>
@@ -56,7 +109,6 @@ builder.Services.AddSwaggerGen(x =>
                 Scopes = new Dictionary<string, string>
                 {
                     {"api1", "Full access" },
-                    {"user", "User info"}
                 }
             }
         }
@@ -75,15 +127,6 @@ builder.Services.AddSwaggerGen(x =>
 
 builder.Services.AddHealthChecks();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("ApiScope", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "api1");
-    });
-});
-
 var app = builder.Build();
 
 try
@@ -99,17 +142,22 @@ try
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "EnglishTeacher v1");
             c.OAuthClientId("swagger");
             c.OAuth2RedirectUrl("https://localhost:7168/swagger/oauth2-redirect.html");
-            c.OAuthUsePkce();
+            //c.OAuthUsePkce();
         });
     }
     app.UseHealthChecks("/hc");
     app.UseHttpsRedirection();
 
-    app.UseAuthentication();
     app.UseSerilogRequestLogging();
 
     app.UseCors();
     app.UseRouting();
+
+    app.UseAuthentication();
+    if (app.Environment.IsEnvironment("Test"))
+    {
+        app.UseIdentityServer();
+    }
     app.UseAuthorization();
 
     app.MapControllers().RequireAuthorization("ApiScope");
@@ -125,3 +173,4 @@ finally
     Log.CloseAndFlush();
 }
 
+public partial class Program { }

@@ -17,7 +17,7 @@ namespace EnglishTeacher.Application.Words.Command.DeleteWord
         public async Task<Unit> Handle(DeleteWordCommand request, CancellationToken cancellationToken)
         {
             var word = await _context.Words.Where(p => p.Id == request.WordId).FirstOrDefaultAsync(cancellationToken);
-
+            
             try
             {
                 _context.Words.Remove(word);
