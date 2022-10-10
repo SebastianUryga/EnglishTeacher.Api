@@ -29,10 +29,10 @@ namespace EnglishTeacher.Api.Controllers
 
         [HttpGet]
         [Route("random")]
-        public async Task<ActionResult<WordDto>> GetWord()
+        public async Task<ActionResult<WordsVm>> GetWord(int maxQuantity)
         {
-            await Task.FromResult(Task.CompletedTask);
-            return new WordDto();
+            var vm = await Mediator.Send(new GetRandomWordsQuery() { MaxQuantity = maxQuantity});
+            return vm;
         }
 
 
