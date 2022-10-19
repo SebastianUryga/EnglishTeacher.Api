@@ -44,9 +44,9 @@ namespace EnglishTeacher.Persistance
 
             optionBuilder.UseSqlServer(connectionString);
 
-            return CreateNewInstance(optionBuilder);
+            return CreateNewInstance(optionBuilder.Options);
         }
 
-        protected abstract TContext CreateNewInstance(DbContextOptionsBuilder<TContext> optionBuilder);
+        protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
     }
 }

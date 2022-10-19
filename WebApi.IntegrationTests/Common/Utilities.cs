@@ -1,6 +1,7 @@
 ﻿using EnglishTeacher.Domain.Entities;
 using EnglishTeacher.Persistance;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace WebApi.IntegrationTests.Common
                 {
                     CorrectAnswers = 0,
                     WrongAnswers = 0,
-                    LastAnswer = null
+                    LastAnswer = DateTime.Now
                 },
             };
             var sentence = new Sentence

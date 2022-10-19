@@ -24,7 +24,7 @@ namespace Application.UnitTests.Word.Queries
         {
             var handler = new GetWordDetailQueryHandler(_context, _mapper);
 
-            var wordId = 2;
+            var wordId = 3;
 
             var restult = await handler.Handle(new GetWordDetailQuery { WordId = wordId }, CancellationToken.None);
 

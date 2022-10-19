@@ -11,7 +11,7 @@ namespace Application.UnitTests.Common
     {
         public static Mock<WordDbContext> Create()
         {
-            var dateTime = new DateTime(2000, 2, 2);
+            var dateTime = new DateTime(2022, 2, 2);
             var dateTimeMock = new Mock<IDateTime>();
             dateTimeMock.Setup(m => m.Now).Returns(dateTime);
 
@@ -28,9 +28,8 @@ namespace Application.UnitTests.Common
             
             context.Database.EnsureCreated();
 
-            var word = new EnglishTeacher.Domain.Entities.Word()
+            var word1 = new EnglishTeacher.Domain.Entities.Word()
             {
-                Id = 2,
                 StatusId = 1,
                 CreatedBy = "Admin",
                 EnglishText = "Mouse",
@@ -39,20 +38,36 @@ namespace Application.UnitTests.Common
                 {
                     CorrectAnswers = 0,
                     WrongAnswers = 0,
-                    LastAnswer = null
+                    LastAnswer = dateTime
                 }, 
             };
+
+            var word2 = new EnglishTeacher.Domain.Entities.Word()
+            {
+                StatusId = 1,
+                CreatedBy = "Admin",
+                EnglishText = "Delete",
+                PolishText = "Usuń",
+                AnsweringStatistics = new EnglishTeacher.Domain.ValueObjects.AnsweringStatistics
+                {
+                    CorrectAnswers = 0,
+                    WrongAnswers = 0,
+                    LastAnswer = dateTime
+                },
+            };
+
+            context.Words.Add(word2);
+            context.Words.Add(word1);
+
             var sentence = new Sentence
             {
-                Id = 3,
                 StatusId = 1,
                 CreatedBy = "Admin",
                 Text = "Mosue is very small animal",
-                Word = word,
-                WordId = 2
+                Word = word1,
+                WordId = word1.Id
             };
 
-            context.Words.Add(word);
             context.Sentenses.Add(sentence);
             context.SaveChanges();
 

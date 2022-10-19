@@ -19,7 +19,15 @@ namespace EnglishTeacher.Persistance
                     CreatedBy = "Admin",
                     EnglishText = "Do",
                     PolishText = "robić",
+                    
                 });
+                data.OwnsOne(t => t.AnsweringStatistics).HasData(new
+                {
+                    WordId = 1,
+                    CorrectAnswers = 0,
+                    WrongAnswers = 0,
+                    LastAnswer = DateTime.Now
+                }) ;
             });
 
             builder.Entity<Sentence>(data =>

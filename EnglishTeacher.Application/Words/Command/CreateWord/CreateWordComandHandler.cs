@@ -25,7 +25,7 @@ namespace EnglishTeacher.Application.Words.Command.CreateWord
                 {
                     WrongAnswers = 0,
                     CorrectAnswers = 0,
-                    LastAnswer = null,
+                    LastAnswer = DateTime.Now,
                 }
             };
             _context.Words.Add(word);

@@ -2,6 +2,7 @@
 using AutoMapper;
 using EnglishTeacher.Application.Words.Query.GetWords;
 using EnglishTeacher.Persistance;
+using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System.Linq;
 using System.Threading;
@@ -38,7 +39,7 @@ namespace Application.UnitTests.Word.Queries
         {
             var handler = new GetRandomWordsQueryHandler(_context, _mapper);
 
-            var quantity = _context.Words.Count(x => x.StatusId == 1);
+            var quantity = await _context.Words.CountAsync(x => x.StatusId == 1,CancellationToken.None);
 
             var result = await handler.Handle(new GetRandomWordsQuery { MaxQuantity = quantity + 1 }, CancellationToken.None);
 

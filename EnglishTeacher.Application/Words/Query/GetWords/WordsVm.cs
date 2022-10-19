@@ -1,4 +1,5 @@
 ﻿using EnglishTeacher.Application.Common.Mappings;
+using EnglishTeacher.Domain.Entities;
 
 namespace EnglishTeacher.Application.Words.Query.GetWords
 {
@@ -9,6 +10,8 @@ namespace EnglishTeacher.Application.Words.Query.GetWords
         public void Mapping(MappingProfile profile)
         {
             profile.CreateMap<ICollection<WordDto>, WordsVm>()
+                .ForMember(dst => dst.Words, map => map.MapFrom(src => src));
+            profile.CreateMap<ICollection<Word>, WordsVm>()
                 .ForMember(dst => dst.Words, map => map.MapFrom(src => src));
         }
     }

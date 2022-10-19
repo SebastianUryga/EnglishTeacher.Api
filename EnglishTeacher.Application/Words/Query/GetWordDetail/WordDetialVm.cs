@@ -7,6 +7,7 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
 {
     public class WordDetialVm : IMapForm<Word>
     {
+        public int Id { get; set; }
         public string PolishText { get; set; }
         public string EnglishText { get; set; }
         public int WrongAnswers { get; set; }

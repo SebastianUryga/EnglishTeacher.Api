@@ -20,7 +20,8 @@ namespace EnglishTeacher.Application.Words.Command.DeleteWord
             
             try
             {
-                _context.Words.Remove(word);
+                word.StatusId = 0;
+                _context.Words.Update(word);
             }
             catch (Exception ex)
             {

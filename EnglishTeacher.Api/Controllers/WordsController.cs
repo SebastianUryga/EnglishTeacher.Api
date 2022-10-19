@@ -1,5 +1,7 @@
 ﻿using EnglishTeacher.Application.Words.Command.CreateWord;
 using EnglishTeacher.Application.Words.Command.DeleteWord;
+using EnglishTeacher.Application.Words.Command.UpdateWord;
+using EnglishTeacher.Application.Words.Query.GetPackOfRandomWords;
 using EnglishTeacher.Application.Words.Query.GetWordDetail;
 using EnglishTeacher.Application.Words.Query.GetWords;
 using Microsoft.AspNetCore.Authorization;
@@ -29,9 +31,11 @@ namespace EnglishTeacher.Api.Controllers
 
         [HttpGet]
         [Route("random")]
-        public async Task<ActionResult<WordsVm>> GetWord(int maxQuantity)
+        public async Task<ActionResult<WordsVm>> GetRandomWords(int maxQuantity)
         {
-            var vm = await Mediator.Send(new GetRandomWordsQuery() { MaxQuantity = maxQuantity});
+            var vm = await Mediator.Send(new GetPackOfWordsToAnswerQuery() { MaxQuantity = maxQuantity});
+           
+            //var vm = await Mediator.Send(new GetRandomWordsQuery() { MaxQuantity = maxQuantity});
             return vm;
         }
 
@@ -48,6 +52,13 @@ namespace EnglishTeacher.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddWord(CreateWordCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<WordDetialVm>> UpdateWord(UpdateWordCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);

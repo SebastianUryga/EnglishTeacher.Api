@@ -20,8 +20,4 @@
     <ProjectReference Include="..\EnglishTeacher.Domain\EnglishTeacher.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Words\Command\UpdateWord\" />
-  </ItemGroup>
-
 </Project>

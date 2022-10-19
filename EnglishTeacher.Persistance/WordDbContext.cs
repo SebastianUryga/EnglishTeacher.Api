@@ -10,11 +10,16 @@ namespace EnglishTeacher.Persistance
     {
         private readonly IDateTime _dateTime;
         private readonly ICurrentUserService _userService;
+        public WordDbContext(DbContextOptions<WordDbContext> options) : base(options)
+        {
+        }
+
         public WordDbContext(DbContextOptions<WordDbContext> options, IDateTime dateTime, ICurrentUserService userService) : base(options)
         {
             _dateTime = dateTime;
             _userService = userService;
         }
+
         public DbSet<Word> Words { get; set; }
         public DbSet<Sentence> Sentenses { get; set; }
 

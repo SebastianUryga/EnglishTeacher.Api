@@ -1,4 +1,5 @@
 ﻿using EnglishTeacher.Application.Behaviours;
+using EnglishTeacher.Domain.Policies;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
@@ -14,6 +15,9 @@ namespace EnglishTeacher.Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddSingleton<IRandomProbabilityValuePolicy, RatioOfCorrectAnswersPolicy>();
+            services.AddSingleton<IRandomProbabilityValuePolicy, TimePassedSinceLastAnswerPolicy>();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehaviour<>));
