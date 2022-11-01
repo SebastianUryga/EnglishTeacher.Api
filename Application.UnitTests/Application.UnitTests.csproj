@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EnglishTeacher.Application\EnglishTeacher.Application.csproj" />
+    <ProjectReference Include="..\EnglishTeacher.Infrastructure\EnglishTeacher.Infrastructure.csproj" />
     <ProjectReference Include="..\EnglishTeacher.Persistance\EnglishTeacher.Persistance.csproj" />
   </ItemGroup>
 

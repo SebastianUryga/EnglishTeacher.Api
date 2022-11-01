@@ -14,7 +14,7 @@ namespace EnglishTeacher.Infrastructure
         {
             services.AddHttpClient("DictionaryClient", option =>
             {
-                 option.BaseAddress = new Uri("ttps://api.dictionaryapi.dev/api/v2/entries/en/");
+                 option.BaseAddress = new Uri("https://api.dictionaryapi.dev/api/v2/entries/en/");
                  option.Timeout = new TimeSpan(0, 0, 10);
                  option.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 

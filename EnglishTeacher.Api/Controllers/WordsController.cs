@@ -1,5 +1,6 @@
 ﻿using EnglishTeacher.Application.Words.Command.CreateWord;
 using EnglishTeacher.Application.Words.Command.DeleteWord;
+using EnglishTeacher.Application.Words.Command.GiveAnswer;
 using EnglishTeacher.Application.Words.Command.UpdateWord;
 using EnglishTeacher.Application.Words.Query.GetPackOfRandomWords;
 using EnglishTeacher.Application.Words.Query.GetWordDetail;
@@ -59,6 +60,15 @@ namespace EnglishTeacher.Api.Controllers
 
         [HttpPut]
         public async Task<ActionResult<WordDetialVm>> UpdateWord(UpdateWordCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("answer")]
+
+        public async Task<ActionResult<bool>> GiveAnswer(GiveAnswerCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);

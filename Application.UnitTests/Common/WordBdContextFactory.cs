@@ -15,14 +15,14 @@ namespace Application.UnitTests.Common
             var dateTimeMock = new Mock<IDateTime>();
             dateTimeMock.Setup(m => m.Now).Returns(dateTime);
 
-            var currenUserMock = new Mock<ICurrentUserService>();
-            currenUserMock.Setup(m => m.Email).Returns("user@user.com");
-            currenUserMock.Setup(m => m.IsAuthenticated).Returns(true);
+            var currentUserMock = new Mock<ICurrentUserService>();
+            currentUserMock.Setup(m => m.Email).Returns("user@user.com");
+            currentUserMock.Setup(m => m.IsAuthenticated).Returns(true);
 
             var options = new DbContextOptionsBuilder<WordDbContext>()
                 .UseInMemoryDatabase(new Guid().ToString()).Options;
           
-            var mock = new Mock<WordDbContext>(options, dateTimeMock.Object, currenUserMock.Object) { CallBase = true };
+            var mock = new Mock<WordDbContext>(options, dateTimeMock.Object, currentUserMock.Object) { CallBase = true };
             
             var context = mock.Object;
             
@@ -68,7 +68,7 @@ namespace Application.UnitTests.Common
                 WordId = word1.Id
             };
 
-            context.Sentenses.Add(sentence);
+            context.Sentences.Add(sentence);
             context.SaveChanges();
 
             return mock;
