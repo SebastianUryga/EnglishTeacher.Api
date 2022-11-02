@@ -15,7 +15,8 @@ namespace EnglishTeacher.Persistance
         private const string AspNetCoreEnvirioment = "ASPNETCORE_ENVIRONMENT";
         public TContext CreateDbContext(string[] args)
         {
-            var basePath = Directory.GetCurrentDirectory() + String.Format($"{0}..{0}EnglishTeacher", Path.DirectorySeparatorChar);
+            var basePath = Directory.GetCurrentDirectory() + string.Format($"/../EnglishTeacher.Api", Path.DirectorySeparatorChar);
+            Console.WriteLine(basePath);
             return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvirioment));
         }
         private TContext Create(string basePath, string environmentName)

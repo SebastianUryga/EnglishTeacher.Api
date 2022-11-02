@@ -43,7 +43,7 @@ namespace WebApi.IntegrationTests.Common
             };
 
             context.Words.Add(word);
-            context.Sentenses.Add(sentence);
+            context.Sentences.Add(sentence);
             context.SaveChanges();
         }
     }

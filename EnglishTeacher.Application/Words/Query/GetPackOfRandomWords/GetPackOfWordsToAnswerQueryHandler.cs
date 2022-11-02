@@ -31,14 +31,14 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
 
             foreach (var word in allWords)
             {
-                var x = new KeyValuePair<Word, double>(word, 0.0);
+                var sumValuePair = new KeyValuePair<Word, double>(word, 0.0);
                 foreach (var policy in _policies)
                 {
-                    var policyData = new PolicyData(x, _dateTime.Now);
+                    var policyData = new PolicyData(sumValuePair, _dateTime.Now);
                     if (policy.IsApplicable(policyData))
-                        x = policy.SetProbabilityValue(policyData);
+                        sumValuePair = policy.SetProbabilityValue(policyData);
                 }
-                wordValueDictionary.Add(x.Key,x.Value);
+                wordValueDictionary.Add(sumValuePair.Key, sumValuePair.Value);
             }
 
             return _mapper.Map<WordsVm>(wordValueDictionary.OrderBy(x => x.Value).Take(request.MaxQuantity).Select(x => x.Key).ToList());

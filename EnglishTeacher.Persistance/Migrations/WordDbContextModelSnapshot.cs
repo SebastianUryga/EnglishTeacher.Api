@@ -63,13 +63,13 @@ namespace EnglishTeacher.Persistance.Migrations
 
                     b.HasIndex("WordId");
 
-                    b.ToTable("Sentenses");
+                    b.ToTable("Sentences");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 10, 7, 12, 12, 32, 260, DateTimeKind.Local).AddTicks(7207),
+                            Created = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5811),
                             CreatedBy = "Admin",
                             StatusId = 1,
                             Text = "What do you do?",
@@ -78,7 +78,7 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 10, 7, 12, 12, 32, 260, DateTimeKind.Local).AddTicks(7217),
+                            Created = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5813),
                             CreatedBy = "Adnim",
                             StatusId = 1,
                             Text = "Just do it",
@@ -132,7 +132,7 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 10, 7, 12, 12, 32, 260, DateTimeKind.Local).AddTicks(6932),
+                            Created = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5606),
                             CreatedBy = "Admin",
                             EnglishText = "Do",
                             PolishText = "robić",
@@ -164,7 +164,7 @@ namespace EnglishTeacher.Persistance.Migrations
                                 .HasDefaultValue(0)
                                 .HasColumnName("CorrectAnswers");
 
-                            b1.Property<DateTime?>("LastAnswer")
+                            b1.Property<DateTime>("LastAnswer")
                                 .HasColumnType("datetime2")
                                 .HasColumnName("LastAnswer");
 
@@ -180,6 +180,15 @@ namespace EnglishTeacher.Persistance.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("WordId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    WordId = 1,
+                                    CorrectAnswers = 0,
+                                    LastAnswer = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5766),
+                                    WrongAnswers = 0
+                                });
                         });
 
                     b.Navigation("AnsweringStatistics")
