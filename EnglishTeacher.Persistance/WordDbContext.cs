@@ -36,6 +36,14 @@ namespace EnglishTeacher.Persistance
             {
                 switch(entry.State)
                 {
+                    case EntityState.Deleted:
+                        entry.Entity.StatusId = 0;
+                        entry.Entity.Modified = _dateTime.Now;
+                        entry.Entity.ModifiedBy = _userService.Email;
+                        entry.Entity.Inactivated = _dateTime.Now;
+                        entry.Entity.InactivatedBy = _userService.Email;
+                        entry.State = EntityState.Modified;
+                        break;
                     case EntityState.Added:
                         entry.Entity.Created = _dateTime.Now;
                         entry.Entity.CreatedBy = _userService.Email;
@@ -45,17 +53,21 @@ namespace EnglishTeacher.Persistance
                         entry.Entity.Modified = _dateTime.Now;
                         entry.Entity.ModifiedBy = _userService.Email;
                         break;
-                    case EntityState.Deleted:
-                        entry.Entity.StatusId = 0;
-                        entry.Entity.Modified = _dateTime.Now;
-                        entry.Entity.ModifiedBy = _userService.Email;
-                        entry.Entity.Inactivated = _dateTime.Now;
-                        entry.Entity.InactivatedBy = _userService.Email;
-                        entry.State = EntityState.Modified;
-                        break;
+                    
                 }
             }
 
+            foreach (var entry in ChangeTracker.Entries<ValueObject>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        break;
+                    default:
+                        break;
+                }
+            }
             return base.SaveChangesAsync(cancellationToken);
         }
     }
