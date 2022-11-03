@@ -1,4 +1,5 @@
-﻿using EnglishTeacher.Application.Words.Query.GetWordDetail;
+﻿using System.Net.Http;
+using EnglishTeacher.Application.Words.Query.GetWordDetail;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Shouldly;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace WebApi.IntegrationTests.Controllers.Words
         }
 
         [Fact]
-        public async Task GivenWordId_ReturnWordsDetail()
+        public async Task GivenWordIdByAthenticatedClient_ReturnWordsDetail()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
@@ -25,7 +26,21 @@ namespace WebApi.IntegrationTests.Controllers.Words
             var response = await client.GetAsync($"/api/words/{id}");
             response.EnsureSuccessStatusCode();
 
-            var result = await Utilities.GetResponseContent<WordDetialVm>(response);
+            var result = await Utilities.GetResponseContent<WordDetailVm>(response);
+
+            result.EnglishText.ShouldBe("Mouse");
+        }
+
+        [Fact]
+        public async Task GivenWordId_ReturnWordsDetail()
+        {
+            var client = _factory.CreateClient();
+
+            string id = "2";
+            var response = await client.GetAsync($"/api/words/{id}");
+            response.EnsureSuccessStatusCode();
+
+            var result = await Utilities.GetResponseContent<WordDetailVm>(response);
 
             result.EnglishText.ShouldBe("Mouse");
         }

@@ -5,7 +5,7 @@ using System;
 
 namespace EnglishTeacher.Application.Words.Query.GetWordDetail
 {
-    public class WordDetialVm : IMapForm<Word>
+    public class WordDetailVm : IMapForm<Word>
     {
         public int Id { get; set; }
         public string PolishText { get; set; }
@@ -17,7 +17,7 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
     
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Word, WordDetialVm>()
+            profile.CreateMap<Word, WordDetailVm>()
                 .ForMember(d => d.WrongAnswers, map => map.MapFrom(src => src.AnsweringStatistics.WrongAnswers))
                 .ForMember(d => d.CorrectAnswers, map => map.MapFrom(src => src.AnsweringStatistics.CorrectAnswers))
                 .ForMember(d => d.LastAnswers, map => map.MapFrom(src => src.AnsweringStatistics.LastAnswer));

@@ -6,7 +6,7 @@ using System;
 
 namespace EnglishTeacher.Application.Words.Query.GetWordDetail
 {
-    public class GetWordDetailQueryHandler : IRequestHandler<GetWordDetailQuery, WordDetialVm>
+    public class GetWordDetailQueryHandler : IRequestHandler<GetWordDetailQuery, WordDetailVm>
     {
         private readonly IWordDbContext _context;
         private IMapper _mapper;
@@ -16,11 +16,11 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
             _context = wordDbContext;
             _mapper = mapper;
         }
-        public async Task<WordDetialVm> Handle(GetWordDetailQuery request, CancellationToken cancellationToken)
+        public async Task<WordDetailVm> Handle(GetWordDetailQuery request, CancellationToken cancellationToken)
         {
             var word = await _context.Words.Where(p => p.Id == request.WordId && p.StatusId == 1).FirstOrDefaultAsync(cancellationToken);
 
-            var wordVm = _mapper.Map<WordDetialVm>(word);
+            var wordVm = _mapper.Map<WordDetailVm>(word);
 
             return wordVm;
         }

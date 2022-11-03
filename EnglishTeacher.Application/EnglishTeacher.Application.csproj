@@ -20,4 +20,9 @@
     <ProjectReference Include="..\EnglishTeacher.Domain\EnglishTeacher.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sentences\Command\" />
+    <Folder Include="Sentences\Query\" />
+  </ItemGroup>
+
 </Project>

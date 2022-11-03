@@ -45,7 +45,7 @@ namespace EnglishTeacher.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("{id}")]
-        public async Task<ActionResult<WordDetialVm>> GetWord(int id)
+        public async Task<ActionResult<WordDetailVm>> GetWord(int id)
         {
             var vm = await Mediator.Send(new GetWordDetailQuery() { WordId = id });
             return vm;
@@ -59,7 +59,7 @@ namespace EnglishTeacher.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<WordDetialVm>> UpdateWord(UpdateWordCommand command)
+        public async Task<ActionResult<WordDetailVm>> UpdateWord(UpdateWordCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);

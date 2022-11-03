@@ -2,7 +2,7 @@
 
 namespace EnglishTeacher.Application.Words.Query.GetWordDetail
 {
-    public class GetWordDetailQuery : IRequest<WordDetialVm>
+    public class GetWordDetailQuery : IRequest<WordDetailVm>
     {
         public int WordId { get; set; }
     }

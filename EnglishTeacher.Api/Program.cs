@@ -13,6 +13,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,8 +90,8 @@ else
         });
     });
 }
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.TryAddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -160,9 +161,13 @@ try
     }
     app.UseAuthorization();
 
-    app.MapControllers().RequireAuthorization("ApiScope");
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+    //.RequireAuthorization("ApiScope");
 
-    app.Run();
+        app.Run();
 }
 catch(Exception ex)
 {

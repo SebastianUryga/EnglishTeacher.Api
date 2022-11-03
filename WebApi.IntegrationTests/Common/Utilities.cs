@@ -22,6 +22,7 @@ namespace WebApi.IntegrationTests.Common
         {
             var word = new Word()
             {
+                Id = 93,
                 StatusId = 1,
                 CreatedBy = "Admin",
                 EnglishText = "Mouse",
@@ -33,16 +34,17 @@ namespace WebApi.IntegrationTests.Common
                     LastAnswer = DateTime.Now
                 },
             };
+            context.Words.Add(word);
+
             var sentence = new Sentence
             {
                 StatusId = 1,
                 CreatedBy = "Admin",
                 Text = "Mosue is very small animal",
-                Word = word,
-                WordId = 2
+                //Word = word,
+                WordId = 93
             };
 
-            context.Words.Add(word);
             context.Sentences.Add(sentence);
             context.SaveChanges();
         }

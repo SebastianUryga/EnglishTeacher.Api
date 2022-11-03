@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EnglishTeacher.Application.Words.Command.UpdateWord
 {
-    public class UpdateWordCommand : IRequest<WordDetialVm>
+    public class UpdateWordCommand : IRequest<WordDetailVm>
     {
         public int WordId { get; set; }
         public string PolishText { get; set; }

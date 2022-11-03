@@ -28,7 +28,7 @@ namespace Application.UnitTests.Word.Queries
 
             var restult = await handler.Handle(new GetWordDetailQuery { WordId = wordId }, CancellationToken.None);
 
-            restult.ShouldBeOfType<WordDetialVm>();
+            restult.ShouldBeOfType<WordDetailVm>();
             restult.EnglishText.ShouldBe("Mouse");
         }
     }
