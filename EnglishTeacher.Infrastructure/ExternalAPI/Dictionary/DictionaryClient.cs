@@ -12,7 +12,7 @@ namespace EnglishTeacher.Infrastructure.ExternalAPI.Dictionary
 
         public DictionaryClient(IHttpClientFactory factory)
         {
-            _httpClient = factory.CreateClient("Dictionary");
+            _httpClient = factory.CreateClient("DictionaryClient");
             _baseUrl = _httpClient.BaseAddress.ToString();
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() =>
             {
@@ -31,7 +31,7 @@ namespace EnglishTeacher.Infrastructure.ExternalAPI.Dictionary
 
             var urlBuilder = new StringBuilder();
             urlBuilder.Append(BaseUrl);
-            urlBuilder.Append($"&t={word}");
+            urlBuilder.Append(word);
             var client = _httpClient;
             try
             {
