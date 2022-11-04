@@ -34,7 +34,7 @@ namespace EnglishTeacher.Api.Controllers
 
         [HttpGet]
         [Route("examples/{word}")]
-        public async Task<ActionResult<string>> GetExamples(string word)
+        public async Task<ActionResult<string[]>> GetExamples(string word)
         {
             var vm = await Mediator.Send(new GetSentenceExamplesQuery() { Word = word});
             return vm;
