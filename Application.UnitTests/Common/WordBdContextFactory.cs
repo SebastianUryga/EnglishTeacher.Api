@@ -61,9 +61,10 @@ namespace Application.UnitTests.Common
 
             var sentence = new Sentence
             {
+                Id = 4,
                 StatusId = 1,
                 CreatedBy = "Admin",
-                Text = "Mosue is very small animal",
+                Text = "Mouse is very small animal",
                 Word = word1,
                 WordId = word1.Id
             };
@@ -74,7 +75,7 @@ namespace Application.UnitTests.Common
             return mock;
         }
 
-        public static void Distroy(WordDbContext context)
+        public static void Destroy(WordDbContext context)
         {
             context.Database.EnsureDeleted();
             context.Dispose();

@@ -10,11 +10,9 @@ namespace EnglishTeacher.Application.Sentences.Query.GetSentenceExamples
 {
     public class GetSentenceExamplesQueryHandler : IRequestHandler<GetSentenceExamplesQuery, string[]>
     {
-        private readonly IMapper _mapper;
         private readonly IDictionaryClient _dictionary;
-        public GetSentenceExamplesQueryHandler(IMapper mapper, IDictionaryClient dictionary)
+        public GetSentenceExamplesQueryHandler(IDictionaryClient dictionary)
         {
-            _mapper = mapper;
             _dictionary = dictionary;
         }
         public async Task<string[]> Handle(GetSentenceExamplesQuery request, CancellationToken cancellationToken)

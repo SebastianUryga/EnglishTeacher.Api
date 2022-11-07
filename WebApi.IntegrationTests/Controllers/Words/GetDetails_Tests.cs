@@ -18,7 +18,7 @@ namespace WebApi.IntegrationTests.Controllers.Words
         }
 
         [Fact]
-        public async Task GivenWordIdByAthenticatedClient_ReturnWordsDetail()
+        public async Task GivenWordIdByAuthenticatedClient_ReturnWordsDetail()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 

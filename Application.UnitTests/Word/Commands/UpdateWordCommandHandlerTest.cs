@@ -29,12 +29,13 @@ namespace Application.UnitTests.Word
             var command = new UpdateWordCommand()
             {
                 WordId = wordId,
-                EnglishText = word.EnglishText,
-                PolishText = word.PolishText
+                EnglishText = "update",
+                PolishText = "aktualizacja"
             };
 
             var result = await _handler.Handle(command, CancellationToken.None);
-
+            result.CorrectAnswers.ShouldBe(word.AnsweringStatistics.CorrectAnswers);
+            result.EnglishText.ShouldBe(command.EnglishText);
             word.ShouldNotBeNull();
         }
     }

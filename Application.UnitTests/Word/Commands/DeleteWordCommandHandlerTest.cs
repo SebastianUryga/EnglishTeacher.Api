@@ -22,7 +22,7 @@ namespace Application.UnitTests.Word.Commands
         }
 
         [Fact]
-        public async Task Handle_GivenNotExistingWordId_ShouldThrowNotFoundExcetpion()
+        public async Task Handle_GivenNotExistingWordId_ShouldThrowNotFoundException()
         {
             var command = new DeleteWordCommand()
             {

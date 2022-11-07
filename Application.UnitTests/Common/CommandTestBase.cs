@@ -21,7 +21,7 @@ namespace Application.UnitTests.Common
 
         public void Dispose()
         {
-            WordDbContextFactory.Distroy(_context);
+            WordDbContextFactory.Destroy(_context);
         }
     }
 }

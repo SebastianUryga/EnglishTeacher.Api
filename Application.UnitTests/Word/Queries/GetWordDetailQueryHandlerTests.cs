@@ -6,6 +6,7 @@ using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using EnglishTeacher.Domain.Entities;
 
 namespace Application.UnitTests.Word.Queries
 {
@@ -26,10 +27,10 @@ namespace Application.UnitTests.Word.Queries
 
             var wordId = 3;
 
-            var restult = await handler.Handle(new GetWordDetailQuery { WordId = wordId }, CancellationToken.None);
+            var result = await handler.Handle(new GetWordDetailQuery { WordId = wordId }, CancellationToken.None);
 
-            restult.ShouldBeOfType<WordDetailVm>();
-            restult.EnglishText.ShouldBe("Mouse");
+            result.ShouldBeOfType<WordDetailVm>();
+            result.EnglishText.ShouldBe("Mouse");
         }
     }
 }

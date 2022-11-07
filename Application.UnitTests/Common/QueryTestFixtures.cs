@@ -25,7 +25,7 @@ namespace Application.UnitTests.Common
 
         public void Dispose()
         {
-            WordDbContextFactory.Distroy(Context);
+            WordDbContextFactory.Destroy(Context);
         }
 
         [CollectionDefinition("QueryCollection")]

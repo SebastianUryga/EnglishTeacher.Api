@@ -16,7 +16,9 @@ namespace EnglishTeacher.Application.Sentences.Query.GetSentenceDetail
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Sentence, SentenceDetailVm>()
-                .ForMember(dest => dest.EnglishText, map => map.MapFrom(src => src.Text));
+                .ForMember(dest => dest.EnglishText, map => map.MapFrom(src => src.Text))
+                .ForMember(dest => dest.Word, map => map.MapFrom(src => src.Word.EnglishText))
+                .ForMember(dest => dest.AddedBy, map => map.MapFrom(src => src.CreatedBy));
         }
     }
 }

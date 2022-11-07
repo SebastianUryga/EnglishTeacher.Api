@@ -17,7 +17,8 @@ namespace EnglishTeacher.Application.Sentences.Query.GetSentenceDetail
         }
         public async Task<SentenceDetailVm> Handle(GetSentenceDetailQuery request, CancellationToken cancellationToken)
         {
-            var sentence = await _context.Sentences.Where(x => x.StatusId == 1 && x.Id == request.Id).FirstOrDefaultAsync();
+            var sentence = await _context.Sentences.Where(x => x.StatusId == 1 && x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
+
             return _mapper.Map<SentenceDetailVm>(sentence);
         }
     }
