@@ -4,9 +4,9 @@ using Application.UnitTests.Common;
 using EnglishTeacher.Application.Common.Exceptions;
 using EnglishTeacher.Application.Sentences.Command.AddSentence;
 using EnglishTeacher.Application.Words.Command.CreateWord;
+using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.UnitTests.Sentences.Commands
 {
@@ -22,13 +22,19 @@ namespace Application.UnitTests.Sentences.Commands
         [Fact]
         public async Task Handle_ValidRequest_ShouldInsertSentence()
         {
+            string englishText = "I immediately deleted the program and have not used it since.";
+            string polishText = "Natychmiast usunąłem program i od tego czasu nie używałem go.";
             var command = new AddSentenceCommand()
             {
-                EnglishText = "I immediately deleted the program and have not used it since.",
-                PolishText = "Natychmiast usunąłem program i od tego czasu nie używałem go.",
+                EnglishText = englishText,
+                PolishText = polishText,
                 WordId = 2,
             };
             var result = await _handler.Handle(command, CancellationToken.None);
+            var sentence = await _context.Sentences.FirstOrDefaultAsync(t => t.Id == result, CancellationToken.None);
+
+            sentence.ShouldNotBeNull();
+            sentence.Text.ShouldBe(englishText);
         }
 
         [Fact]

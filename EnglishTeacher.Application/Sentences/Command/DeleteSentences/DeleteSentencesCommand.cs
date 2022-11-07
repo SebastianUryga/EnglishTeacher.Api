@@ -4,6 +4,6 @@ namespace EnglishTeacher.Application.Sentences.Command.DeleteSentences
 {
     public class DeleteSentencesCommand : IRequest
     {
-        public int Id { get; set; }
+        public int SentenceId { get; set; }
     }
 }

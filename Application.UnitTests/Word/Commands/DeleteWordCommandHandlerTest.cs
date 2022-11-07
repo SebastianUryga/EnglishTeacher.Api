@@ -54,5 +54,12 @@ namespace Application.UnitTests.Word.Commands
             word.ShouldNotBeNull();
             word.StatusId.ShouldBe(0);
         }
+
+        [Fact]
+        public async Task Handle_GivenWordReletedToSentence_SholudAlsoRemoveSentence()
+        {
+            //TODO implement
+            await Task.FromResult(Task.CompletedTask);
+        }
     }
 }
