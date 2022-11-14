@@ -51,9 +51,9 @@ namespace EnglishTeacher.Persistance.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sentenses", x => x.Id);
+                    table.PrimaryKey("PK_Sentences", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sentenses_Words_WordId",
+                        name: "FK_Sentences_Words_WordId",
                         column: x => x.WordId,
                         principalTable: "Words",
                         principalColumn: "Id",
@@ -63,20 +63,20 @@ namespace EnglishTeacher.Persistance.Migrations
             migrationBuilder.InsertData(
                 table: "Words",
                 columns: new[] { "Id", "Created", "CreatedBy", "EnglishText", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "PolishText", "StatusId", "LastAnswer" },
-                values: new object[] { 1, new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5606), "Admin", "Do", null, null, null, null, "robić", 1, new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5766) });
+                values: new object[] { 1, new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9282), "Admin", "Do", null, null, null, null, "robić", 1, new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9492) });
 
             migrationBuilder.InsertData(
                 table: "Sentences",
                 columns: new[] { "Id", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId", "Text", "WordId" },
-                values: new object[] { 1, new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5811), "Admin", null, null, null, null, 1, "What do you do?", 1 });
+                values: new object[] { 1, new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9529), "Admin", null, null, null, null, 1, "What do you do?", 1 });
 
             migrationBuilder.InsertData(
                 table: "Sentences",
                 columns: new[] { "Id", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId", "Text", "WordId" },
-                values: new object[] { 2, new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5813), "Adnim", null, null, null, null, 1, "Just do it", 1 });
+                values: new object[] { 2, new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9531), "Adnim", null, null, null, null, 1, "Just do it", 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sentenses_WordId",
+                name: "IX_Sentences_WordId",
                 table: "Sentences",
                 column: "WordId");
         }

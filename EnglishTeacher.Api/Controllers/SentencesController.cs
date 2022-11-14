@@ -10,6 +10,7 @@ using EnglishTeacher.Application.Words.Query.GetWordDetail;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace EnglishTeacher.Api.Controllers
 {
@@ -54,7 +55,6 @@ namespace EnglishTeacher.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSentence(AddSentenceCommand command)
         {
-            throw new NotImplementedException();
             var result = await Mediator.Send(command);
             return Ok(result);
         }
@@ -62,7 +62,9 @@ namespace EnglishTeacher.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteSentences(int id)
         {
-            return Ok();
+            var result = await Mediator.Send(new DeleteSentencesCommand(){SentenceId = id});
+
+            return Ok(result);
         }
     }
 }

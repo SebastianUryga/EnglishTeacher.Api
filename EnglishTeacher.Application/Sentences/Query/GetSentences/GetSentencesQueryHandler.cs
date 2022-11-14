@@ -11,10 +11,20 @@ public class GetSentencesQueryHandler : IRequestHandler<GetSentencesQuery,Senten
 {
     private readonly IWordDbContext _context;
     private IMapper _mapper;
+
+    public GetSentencesQueryHandler(IWordDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
     public async Task<SentencesVm> Handle(GetSentencesQuery request, CancellationToken cancellationToken)
     {
-        var sentences = (await _context.Sentences.Where(x => x.StatusId == 1).AsNoTracking().ProjectTo<SentenceDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken));
-        var sentencesVm = _mapper.Map<SentencesVm>(sentences);
+        var sentences = _context.Sentences.Where(x => x.StatusId == 1);
+        var sentenceDtos = await sentences
+            .ProjectTo<SentenceDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        var sentencesVm = _mapper.Map<SentencesVm>(sentenceDtos);
         return sentencesVm;
     }
 }

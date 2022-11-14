@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnglishTeacher.Persistance.Migrations
 {
     [DbContext(typeof(WordDbContext))]
-    [Migration("20221101121004_initial")]
+    [Migration("20221108150437_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,7 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5811),
+                            Created = new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9529),
                             CreatedBy = "Admin",
                             StatusId = 1,
                             Text = "What do you do?",
@@ -80,7 +80,7 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5813),
+                            Created = new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9531),
                             CreatedBy = "Adnim",
                             StatusId = 1,
                             Text = "Just do it",
@@ -134,7 +134,7 @@ namespace EnglishTeacher.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5606),
+                            Created = new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9282),
                             CreatedBy = "Admin",
                             EnglishText = "Do",
                             PolishText = "robić",
@@ -188,7 +188,7 @@ namespace EnglishTeacher.Persistance.Migrations
                                 {
                                     WordId = 1,
                                     CorrectAnswers = 0,
-                                    LastAnswer = new DateTime(2022, 11, 1, 13, 10, 4, 805, DateTimeKind.Local).AddTicks(5766),
+                                    LastAnswer = new DateTime(2022, 11, 8, 16, 4, 36, 827, DateTimeKind.Local).AddTicks(9492),
                                     WrongAnswers = 0
                                 });
                         });

@@ -19,7 +19,12 @@ namespace EnglishTeacher.Application.Words.Query.GetWords
 
         public async Task<WordsVm> Handle(GetWordsQuery request, CancellationToken cancellationToken)
         {
-            var words = (await _context.Words.Where(x => x.StatusId == 1).AsNoTracking().ProjectTo<WordDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken));
+            var words = (await _context.Words
+                .Where(x => x.StatusId == 1)
+                .AsNoTracking()
+                .ProjectTo<WordDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken));
+
             var wordsVm = _mapper.Map<WordsVm>(words);
             return wordsVm;
         }
