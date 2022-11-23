@@ -25,7 +25,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D601266E-1D1C-4950-868F-B3C72D897085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.IntegrationTests", "WebApi.IntegrationTests\WebApi.IntegrationTests.csproj", "{2AC5D1BB-1153-46D4-B520-42D2BF6007DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.IntegrationTests", "WebApi.IntegrationTests\WebApi.IntegrationTests.csproj", "{2AC5D1BB-1153-46D4-B520-42D2BF6007DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Client", "EnglishTeacher\Client\EnglishTeacher.Client.csproj", "{6D551F4A-EA87-48E1-AD34-34FBC87823B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Server", "EnglishTeacher\Server\EnglishTeacher.Server.csproj", "{C828586B-9700-41E3-8ACC-52324F01AB65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnglishTeacher.Shared", "EnglishTeacher\Shared\EnglishTeacher.Shared.csproj", "{12F3044E-EB0C-4D7B-9935-0193C0562DAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +71,18 @@ Global
 		{2AC5D1BB-1153-46D4-B520-42D2BF6007DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AC5D1BB-1153-46D4-B520-42D2BF6007DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AC5D1BB-1153-46D4-B520-42D2BF6007DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D551F4A-EA87-48E1-AD34-34FBC87823B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D551F4A-EA87-48E1-AD34-34FBC87823B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D551F4A-EA87-48E1-AD34-34FBC87823B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D551F4A-EA87-48E1-AD34-34FBC87823B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C828586B-9700-41E3-8ACC-52324F01AB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C828586B-9700-41E3-8ACC-52324F01AB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C828586B-9700-41E3-8ACC-52324F01AB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C828586B-9700-41E3-8ACC-52324F01AB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12F3044E-EB0C-4D7B-9935-0193C0562DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12F3044E-EB0C-4D7B-9935-0193C0562DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12F3044E-EB0C-4D7B-9935-0193C0562DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12F3044E-EB0C-4D7B-9935-0193C0562DAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +95,9 @@ Global
 		{EDDC7109-CAB0-4DBD-B114-4552ACB44077} = {71ABE8C9-2EE4-401F-ADC0-B249019DE975}
 		{E9215A17-8F5A-4E26-85AF-E09603E57D06} = {8073C7C1-B5EA-47FF-A661-2686FB2A30D4}
 		{2AC5D1BB-1153-46D4-B520-42D2BF6007DF} = {8073C7C1-B5EA-47FF-A661-2686FB2A30D4}
+		{6D551F4A-EA87-48E1-AD34-34FBC87823B4} = {AEF0E18B-6B6F-400B-81FA-5D5BC69BF72E}
+		{C828586B-9700-41E3-8ACC-52324F01AB65} = {AEF0E18B-6B6F-400B-81FA-5D5BC69BF72E}
+		{12F3044E-EB0C-4D7B-9935-0193C0562DAB} = {AEF0E18B-6B6F-400B-81FA-5D5BC69BF72E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19094A9D-34AA-4F60-BB4D-148ADCC55B35}

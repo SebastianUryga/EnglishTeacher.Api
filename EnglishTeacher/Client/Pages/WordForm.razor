@@ -1,0 +1,54 @@
+﻿@page "/addWord"
+@using EnglishTeacher.Client.Models
+@using System.Text.Json
+@using System.Text
+@inject IJSRuntime JsRuntime
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3>Word Form</h3>
+<AuthorizeView>
+    <Authorized Context="Auth">
+    <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+        <div class="from-row">
+            <div class="from-group col">
+                <label>Polish Translate</label>
+                <InputText @bind-Value="model.PolishText" class="from-control"></InputText>
+                <ValidationMessage For="@(() => model.PolishText)"></ValidationMessage>
+            </div>
+            <div class="from-group col">
+                <label>English Translate</label>
+                <InputText @bind-Value="model.EnglishText" class="from-control"></InputText>
+                <ValidationMessage For="@(() => model.EnglishText)"></ValidationMessage>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-danger">Clear</button>
+        </div>
+    </EditForm>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private WordsForm model = new WordsForm();
+    private EditContext editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        //JsRuntime.InvokeVoidAsync("alert", $"Success \n\n{modelJson}");
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync("api/words", content);
+        Navigation.NavigateTo("/words");
+    }
+
+    private void HandleReset()
+    {
+        model = new WordsForm();
+        editContext = new EditContext(model);
+    }
+}

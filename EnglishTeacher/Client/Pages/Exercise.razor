@@ -1,0 +1,96 @@
+﻿@page "/words/exercise"
+@using EnglishTeacher.Client.Models
+@using System.Text.Json
+@using System.Text
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3>Exercise</h3>
+@if (words == null)
+{
+    <EditForm EditContext="@editContext" OnValidSubmit="@HandleChooseWords">
+        <div class="exercise">
+            <label>How many words to Exercise?</label>
+            <InputText @bind-Value="@wordsNumberText" class="form-control" />
+            <ValidationMessage For="@(() => wordsNumberText)" />
+        </div>
+        <button type="submit" class="btn btn-primary">Random</button>
+    </EditForm>
+
+}
+else
+{
+    @if(correct == null)
+    {
+        <EditForm EditContext="@editContext" OnValidSubmit="@GiveAnswer">
+            <div class="exercise">
+                <label>Word @wordIndex+1 / @words.Length+1 </label>
+                <p role="status">Word To Translate: @words[wordIndex].PolishText</p>
+                <InputText @bind-Value="@model.Answer" class="form-control" />
+                <ValidationMessage For="@(() => model.Answer)" />
+            </div>
+            <button type="submit" class="btn btn-primary">Check</button>
+        </EditForm>
+    }
+    else
+    {
+        <p role="status">Correct answer: @words[wordIndex].EnglishText</p>
+        <p role="status">Your Answer: @model.Answer</p>
+    }
+    @if (wordIndex >= words.Length)
+    {
+        <button class="btn btn-primary" @onclick="NextOrFinish">Finish</button>
+    }
+    else
+    {
+        <button class="btn btn-primary" @onclick="NextOrFinish">Next</button>
+    }
+}
+@code {
+    private EditContext editContext;
+    private AnswerForm model = new AnswerForm();
+    private string wordsNumberText;
+    private string currentAnswer;
+    private string textToTranslate;
+    private WordDto[]? words;
+    private int wordIndex = 0;
+    private bool? correct;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    private void NextOrFinish()
+    {
+        wordIndex ++;
+        if (wordIndex > words?.Length)
+        {
+            Navigation.NavigateTo("/words");
+        }
+        correct = null;
+    }
+
+    private async Task HandleChooseWords()
+    {
+        if (Int32.TryParse(wordsNumberText, out var wordsNumber))
+        {
+            var wordsList = await Http.GetFromJsonAsync<WordsVm>($"https://localhost:7168/api/words/random?maxQuantity={wordsNumber}");
+            words = wordsList.Words.ToArray();
+        }
+    }
+
+    private async Task HandleReset()
+    {
+        await Task.FromResult(Task.CompletedTask);
+    }
+
+    async Task GiveAnswer()
+    {
+        model.WordId = words[wordIndex].Id;
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        var response = await Http.PutAsync("api/words/answer", content);
+        correct = words[wordIndex].EnglishText == model.Answer;
+    }
+}

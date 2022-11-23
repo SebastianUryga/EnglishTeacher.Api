@@ -28,12 +28,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddControllers();
-builder.Services.AddCors(options =>
-options.AddPolicy(name: "AllowAll",
+builder.Services.AddCors(options => options.AddDefaultPolicy(
 policy =>
 {
-    policy.AllowAnyOrigin();
+    policy.WithOrigins("https://localhost:5000").AllowAnyMethod().AllowAnyHeader();
 }));
+
 if (builder.Environment.IsEnvironment("Test"))
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>

@@ -53,6 +53,19 @@ namespace IdentityServer
                     AllowAccessTokensViaBrowser = true,
                     RedirectUris = {"https://localhost:7168/swagger/oauth2-redirect.html"},
                     AllowedCorsOrigins = { "https://localhost:7168" }
+                },
+
+                new Client()
+                {
+                    ClientId = "blazor",
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                    RequirePkce = false,
+                    RequireClientSecret = false,
+                    AllowedScopes = {"api1", "user", "openid", "profile"},
+                    AllowedCorsOrigins = {"https://localhost:5000"},
+                    RedirectUris = {"https://localhost:5000/authentication/login-callback"},
+                    PostLogoutRedirectUris = { "https://localhost:5000/" },
+                    Enabled = true
                 }
             };
     }

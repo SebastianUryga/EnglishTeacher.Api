@@ -1,0 +1,44 @@
+﻿@using EnglishTeacher.Client.Models
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+<h3>WordsTable</h3>
+
+<table class ="table table-striped">
+    <thred>
+        <tr>
+            <th>Polish Translate</th>
+        </tr>
+    </thred>
+    <tbody>
+        @foreach(var word in Words)
+        {
+            <tr>
+                <td>@word.PolishText</td>
+                <button @onclick= "() => DisplayTranslate(word.EnglishText)">Translate</button>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<WordDto> Words { get; set; }
+
+    private Task<IJSObjectReference> _module;
+    private Task<IJSObjectReference> Module => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/word.js").AsTask();
+
+    async Task DisplayTranslate(string text)
+    {
+        var module = await Module;
+        await module.InvokeVoidAsync("displayTranslate", text);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if(_module != null)
+        {
+            var module = await _module;
+            await module.DisposeAsync();
+        }
+    }
+}

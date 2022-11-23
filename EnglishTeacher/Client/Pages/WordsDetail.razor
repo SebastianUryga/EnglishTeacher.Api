@@ -1,0 +1,35 @@
+﻿@page "/word"
+@using EnglishTeacher.Client.Models
+@inject HttpClient Http
+
+<AuthorizeView>
+    <Authorized>
+
+        @if (word == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <h3>Words Detail</h3>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@word.EnglishText</h5>
+                    <p class="card-text">@word.PolishText</p>
+                    <a href="#" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Sorry, can't display this view</p>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    private WordsDetailVm word;
+
+    protected override async Task OnInitializedAsync()
+    {
+        word = await Http.GetFromJsonAsync<WordsDetailVm>("api/words/1");
+    }
+}

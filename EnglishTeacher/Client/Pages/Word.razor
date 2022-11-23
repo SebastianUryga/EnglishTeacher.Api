@@ -1,0 +1,20 @@
+﻿@page "/words"
+@using EnglishTeacher.Client.Components;
+@using EnglishTeacher.Client.Models
+@inject HttpClient Http
+
+<h3>Words list</h3>
+
+<WordsTable Words="@words"></WordsTable>
+<div class="page-item">
+    <a href="/addWord" class="btn btn-primary">Add Word</a>
+</div>
+@code {
+    private List<WordDto> words = new List<WordDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var wordsVm = await Http.GetFromJsonAsync<WordsVm>("api/words/list");
+        words = wordsVm.Words.ToList();
+    }
+}
