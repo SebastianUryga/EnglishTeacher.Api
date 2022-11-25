@@ -18,6 +18,7 @@ namespace EnglishTeacher.Application
 
             services.AddSingleton<IRandomProbabilityValuePolicy, RatioOfCorrectAnswersPolicy>();
             services.AddSingleton<IRandomProbabilityValuePolicy, TimePassedSinceLastAnswerPolicy>();
+            services.AddSingleton<IRandomProbabilityValuePolicy, UnpracticedWordsPolicy>();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehaviour<>));
