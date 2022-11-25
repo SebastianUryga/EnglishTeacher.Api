@@ -5,7 +5,7 @@ namespace EnglishTeacher.Domain.Policies
 {
     public class RatioOfCorrectAnswersPolicy : IRandomProbabilityValuePolicy
     {
-        private const double _factory = 4.5;
+        private const double _factory = 0.1;
         public bool IsApplicable(PolicyData data)
         {
             var stat = data.WordValuePair.Key.AnsweringStatistics;
@@ -17,9 +17,9 @@ namespace EnglishTeacher.Domain.Policies
         {
             var stat = data.WordValuePair.Key.AnsweringStatistics;
            
-            var ratio = stat.WrongAnswers / stat.CorrectAnswers;
+            var percentageOfWrongAnswers = 100 * stat.WrongAnswers / (stat.WrongAnswers + stat.CorrectAnswers);
 
-            return new KeyValuePair<Word, double>(data.WordValuePair.Key, data.WordValuePair.Value + ratio * _factory);
+            return new KeyValuePair<Word, double>(data.WordValuePair.Key, data.WordValuePair.Value + percentageOfWrongAnswers * _factory);
         }
 
     }

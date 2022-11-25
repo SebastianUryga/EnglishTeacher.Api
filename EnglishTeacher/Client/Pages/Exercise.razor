@@ -36,16 +36,20 @@ else
     }
     else
     {
+        @if(correct.HasValue)
+        {
+            <span class=@(correct.Value ? "label success" : "label danger")>@(correct.Value ? "Success" : "Fail")</span>
+        }
         <p role="status">Correct answer: @words[wordIndex].EnglishText</p>
         <p role="status">Your Answer: @model.Answer</p>
     }
     @if (wordIndex >= words.Length-1)
     {
-        <button class="btn btn-outline-primary" @onclick="NextOrFinish">Finish</button>
+        <button class="btn btn-outline-primary" @onclick="FinishExercise">Finish</button>
     }
     else
     {
-        <button class="btn btn-dark" @onclick="NextOrFinish">Next</button>
+        <button class="btn btn-dark" @onclick="NextWord">Next</button>
     }
 }
 @code {
@@ -63,21 +67,25 @@ else
         editContext = new EditContext(model);
     }
 
-    private void NextOrFinish()
+    private void NextWord()
     {
         wordIndex ++;
-        if (wordIndex >= words?.Length)
-        {
-            Navigation.NavigateTo("/words");
-        }
         correct = null;
+        model = new AnswerForm();
+        editContext = new EditContext(model);
+
+    }
+
+    private void FinishExercise()
+    {
+        Navigation.NavigateTo("/words");
     }
 
     private async Task HandleChooseWords()
     {
         if (Int32.TryParse(wordsNumberText, out var wordsNumber))
         {
-            var wordsList = await Http.GetFromJsonAsync<WordsVm>($"https://localhost:7168/api/words/random?maxQuantity={wordsNumber}");
+            var wordsList = await Http.GetFromJsonAsync<WordsVm>($"api/words/random?maxQuantity={wordsNumber}");
             words = wordsList.Words.ToArray();
         }
     }
@@ -93,6 +101,6 @@ else
         var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         var response = await Http.PutAsync("api/words/answer", content);
-        correct = words[wordIndex].EnglishText == model.Answer;
+        correct = bool.Parse(await response.Content.ReadAsStringAsync());
     }
 }
