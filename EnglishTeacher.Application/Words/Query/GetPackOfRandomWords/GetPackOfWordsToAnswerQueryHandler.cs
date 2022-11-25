@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Application.Words.Query.GetWords;
+using EnglishTeacher.Domain.Common;
 using EnglishTeacher.Domain.Entities;
 using EnglishTeacher.Domain.Policies;
 using MediatR;
@@ -11,7 +12,7 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
     public class GetPackOfWordsToAnswerQueryHandler : IRequestHandler<GetPackOfWordsToAnswerQuery, WordsVm>
     {
         private IWordDbContext _context;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         private readonly IEnumerable<IRandomProbabilityValuePolicy> _policies;
         private readonly IDateTime _dateTime;
 
@@ -25,7 +26,9 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
 
         public async Task<WordsVm> Handle(GetPackOfWordsToAnswerQuery request, CancellationToken cancellationToken)
         {
-            var allWords = await _context.Words.Where(p => p.StatusId == 1).ToListAsync();
+            var allWords = await _context.Words
+                .Where(p => p.Status == Status.Active)
+                .ToListAsync(cancellationToken);
 
             var wordValueDictionary = new Dictionary<Word, double>();
 
@@ -41,7 +44,13 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
                 wordValueDictionary.Add(sumValuePair.Key, sumValuePair.Value);
             }
 
-            return _mapper.Map<WordsVm>(wordValueDictionary.OrderBy(x => x.Value).Take(request.MaxQuantity).Select(x => x.Key).ToList());
+            var chosenWords = wordValueDictionary
+                .OrderByDescending(x => x.Value)
+                .Select(x => x.Key)
+                .Take(request.MaxQuantity)
+                .ToList();
+
+            return _mapper.Map<WordsVm>(chosenWords);
         }
     }
 }

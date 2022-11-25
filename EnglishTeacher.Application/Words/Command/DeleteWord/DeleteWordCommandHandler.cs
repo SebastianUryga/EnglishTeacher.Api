@@ -1,5 +1,6 @@
 ﻿using EnglishTeacher.Application.Common.Exceptions;
 using EnglishTeacher.Application.Common.Interfaces;
+using EnglishTeacher.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,9 @@ namespace EnglishTeacher.Application.Words.Command.DeleteWord
 
         public async Task<Unit> Handle(DeleteWordCommand request, CancellationToken cancellationToken)
         {
-            var word = await _context.Words.Where(p => p.Id == request.WordId && p.StatusId == 1).FirstOrDefaultAsync(cancellationToken);
+            var word = await _context.Words
+                .Where(p => p.Id == request.WordId && p.Status == Status.Active)
+                .FirstOrDefaultAsync(cancellationToken);
             
             try
             {

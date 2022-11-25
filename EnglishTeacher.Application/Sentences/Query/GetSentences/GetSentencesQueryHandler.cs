@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Application.Words.Query.GetWords;
+using EnglishTeacher.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,8 @@ public class GetSentencesQueryHandler : IRequestHandler<GetSentencesQuery,Senten
     }
     public async Task<SentencesVm> Handle(GetSentencesQuery request, CancellationToken cancellationToken)
     {
-        var sentences = _context.Sentences.Where(x => x.StatusId == 1);
+        var sentences = _context.Sentences
+            .Where(x => x.Status == Status.Active);
         var sentenceDtos = await sentences
             .ProjectTo<SentenceDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);

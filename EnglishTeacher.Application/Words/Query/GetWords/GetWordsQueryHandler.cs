@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EnglishTeacher.Application.Common.Interfaces;
+using EnglishTeacher.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,7 @@ namespace EnglishTeacher.Application.Words.Query.GetWords
         public async Task<WordsVm> Handle(GetWordsQuery request, CancellationToken cancellationToken)
         {
             var words = (await _context.Words
-                .Where(x => x.StatusId == 1)
+                .Where(x => x.Status == Status.Active)
                 .AsNoTracking()
                 .ProjectTo<WordDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken));

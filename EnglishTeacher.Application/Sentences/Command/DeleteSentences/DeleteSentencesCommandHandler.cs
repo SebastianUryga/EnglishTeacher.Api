@@ -1,5 +1,6 @@
 ﻿using EnglishTeacher.Application.Common.Exceptions;
 using EnglishTeacher.Application.Common.Interfaces;
+using EnglishTeacher.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,9 @@ public class DeleteSentencesCommandHandler : IRequestHandler<DeleteSentencesComm
     }
     public async Task<Unit> Handle(DeleteSentencesCommand request, CancellationToken cancellationToken)
     {
-        var sentence = await _context.Sentences.Where(p => p.Id == request.SentenceId && p.StatusId == 1).FirstOrDefaultAsync(cancellationToken);
+        var sentence = await _context.Sentences
+            .Where(p => p.Id == request.SentenceId && p.Status == Status.Active)
+            .FirstOrDefaultAsync(cancellationToken);
 
         try
         {

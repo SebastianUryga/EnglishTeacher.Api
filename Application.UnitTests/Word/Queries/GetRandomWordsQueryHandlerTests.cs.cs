@@ -1,6 +1,7 @@
 ﻿using Application.UnitTests.Common;
 using AutoMapper;
 using EnglishTeacher.Application.Words.Query.GetWords;
+using EnglishTeacher.Domain.Common;
 using EnglishTeacher.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
@@ -39,7 +40,7 @@ namespace Application.UnitTests.Word.Queries
         {
             var handler = new GetRandomWordsQueryHandler(_context, _mapper);
 
-            var quantity = await _context.Words.CountAsync(x => x.StatusId == 1,CancellationToken.None);
+            var quantity = await _context.Words.CountAsync(x => x.Status == Status.Active, CancellationToken.None);
 
             var result = await handler.Handle(new GetRandomWordsQuery { MaxQuantity = quantity + 1 }, CancellationToken.None);
 

@@ -2,6 +2,7 @@
 using EnglishTeacher.Application.Common.Exceptions;
 using EnglishTeacher.Application.Words.Command.CreateWord;
 using EnglishTeacher.Application.Words.Command.DeleteWord;
+using EnglishTeacher.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System.Linq;
@@ -46,13 +47,13 @@ namespace Application.UnitTests.Word.Commands
             };
             var word = await _context.Words.Where(x => x.Id == 2).FirstOrDefaultAsync(CancellationToken.None);
             word.ShouldNotBeNull();
-            word.StatusId.ShouldBe(1);
+            word.Status.ShouldBe(Status.Active);
 
             var result = _handler.Handle(command, CancellationToken.None);
 
             await result.ShouldNotThrowAsync();
             word.ShouldNotBeNull();
-            word.StatusId.ShouldBe(0);
+            word.Status.ShouldBe(Status.Deleted);
         }
 
         [Fact]

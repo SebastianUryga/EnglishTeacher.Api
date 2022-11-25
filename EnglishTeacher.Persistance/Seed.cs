@@ -1,4 +1,5 @@
-﻿using EnglishTeacher.Domain.Entities;
+﻿using EnglishTeacher.Domain.Common;
+using EnglishTeacher.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace EnglishTeacher.Persistance
                 data.HasData(new Word()
                 {
                     Id = 1,
-                    StatusId = 1,
+                    Status = Status.Active,
                     Created = DateTime.Now,
                     CreatedBy = "Admin",
                     EnglishText = "Do",
@@ -33,8 +34,8 @@ namespace EnglishTeacher.Persistance
             builder.Entity<Sentence>(data =>
             {
                 data.HasData(
-                    new Sentence() { Id = 1, StatusId = 1, Created = DateTime.Now, CreatedBy = "Admin", WordId = 1, Text = "What do you do?" },
-                    new Sentence() { Id = 2, StatusId = 1, Created = DateTime.Now, CreatedBy = "Adnim", WordId = 1, Text = "Just do it" }
+                    new Sentence() { Id = 1, Status = Status.Active, Created = DateTime.Now, CreatedBy = "Admin", WordId = 1, Text = "What do you do?" },
+                    new Sentence() { Id = 2, Status = Status.Active, Created = DateTime.Now, CreatedBy = "Admin", WordId = 1, Text = "Just do it" }
                 );
             });
         }

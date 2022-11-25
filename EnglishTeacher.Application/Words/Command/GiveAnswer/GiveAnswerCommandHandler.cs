@@ -1,5 +1,6 @@
 ﻿using EnglishTeacher.Application.Common.Exceptions;
 using EnglishTeacher.Application.Common.Interfaces;
+using EnglishTeacher.Domain.Common;
 using EnglishTeacher.Domain.Entities;
 using EnglishTeacher.Domain.ValueObjects;
 using MediatR;
@@ -20,7 +21,8 @@ namespace EnglishTeacher.Application.Words.Command.GiveAnswer
 
         public async Task<bool> Handle(GiveAnswerCommand request, CancellationToken cancellationToken)
         {
-            var word = await _context.Words.FirstOrDefaultAsync(x => x.StatusId == 1 && x.Id == request.WordId, cancellationToken);
+            var word = await _context.Words
+                .FirstOrDefaultAsync(x => x.Status == Status.Active && x.Id == request.WordId, cancellationToken);
 
             if (word == null)
                 throw new WordNotFoundException(request.WordId, new Exception());

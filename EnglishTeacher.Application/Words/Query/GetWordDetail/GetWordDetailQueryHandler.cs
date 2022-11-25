@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EnglishTeacher.Application.Common.Interfaces;
+using EnglishTeacher.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,7 +19,9 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
         }
         public async Task<WordDetailVm> Handle(GetWordDetailQuery request, CancellationToken cancellationToken)
         {
-            var word = await _context.Words.Where(p => p.Id == request.WordId && p.StatusId == 1).FirstOrDefaultAsync(cancellationToken);
+            var word = await _context.Words
+                .Where(p => p.Id == request.WordId && p.Status == Status.Active)
+                .FirstOrDefaultAsync(cancellationToken);
 
             var wordVm = _mapper.Map<WordDetailVm>(word);
 

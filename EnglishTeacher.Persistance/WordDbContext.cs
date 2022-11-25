@@ -37,7 +37,7 @@ namespace EnglishTeacher.Persistance
                 switch(entry.State)
                 {
                     case EntityState.Deleted:
-                        entry.Entity.StatusId = 0;
+                        entry.Entity.Status = Status.Deleted;
                         entry.Entity.Modified = _dateTime.Now;
                         entry.Entity.ModifiedBy = _userService.Email;
                         entry.Entity.Inactivated = _dateTime.Now;
@@ -47,7 +47,7 @@ namespace EnglishTeacher.Persistance
                     case EntityState.Added:
                         entry.Entity.Created = _dateTime.Now;
                         entry.Entity.CreatedBy = _userService.Email;
-                        entry.Entity.StatusId = 1;
+                        entry.Entity.Status = Status.Active;
                         break;
                     case EntityState.Modified:
                         entry.Entity.Modified = _dateTime.Now;

@@ -4,6 +4,7 @@ using EnglishTeacher.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
+using EnglishTeacher.Domain.Common;
 
 namespace Application.UnitTests.Common
 {
@@ -30,7 +31,7 @@ namespace Application.UnitTests.Common
 
             var word1 = new EnglishTeacher.Domain.Entities.Word()
             {
-                StatusId = 1,
+                Status = Status.Active,
                 CreatedBy = "Admin",
                 EnglishText = "Mouse",
                 PolishText = "Mysz",
@@ -44,7 +45,7 @@ namespace Application.UnitTests.Common
 
             var word2 = new EnglishTeacher.Domain.Entities.Word()
             {
-                StatusId = 1,
+                Status = Status.Active,
                 CreatedBy = "Admin",
                 EnglishText = "Delete",
                 PolishText = "Usuń",
@@ -62,7 +63,7 @@ namespace Application.UnitTests.Common
             var sentence = new Sentence
             {
                 Id = 4,
-                StatusId = 1,
+                Status = Status.Active,
                 CreatedBy = "Admin",
                 Text = "Mouse is very small animal",
                 Word = word1,

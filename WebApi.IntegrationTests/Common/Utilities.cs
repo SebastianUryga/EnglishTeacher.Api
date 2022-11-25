@@ -1,4 +1,5 @@
-﻿using EnglishTeacher.Domain.Entities;
+﻿using EnglishTeacher.Domain.Common;
+using EnglishTeacher.Domain.Entities;
 using EnglishTeacher.Persistance;
 using Newtonsoft.Json;
 using System;
@@ -23,7 +24,7 @@ namespace WebApi.IntegrationTests.Common
             var word = new Word()
             {
                 Id = 93,
-                StatusId = 1,
+                Status = Status.Active,
                 CreatedBy = "Admin",
                 EnglishText = "Mouse",
                 PolishText = "Mysz",
@@ -38,9 +39,9 @@ namespace WebApi.IntegrationTests.Common
 
             var sentence = new Sentence
             {
-                StatusId = 1,
+                Status = Status.Active,
                 CreatedBy = "Admin",
-                Text = "Mosue is very small animal",
+                Text = "Mouse is very small animal",
                 //Word = word,
                 WordId = 93
             };
