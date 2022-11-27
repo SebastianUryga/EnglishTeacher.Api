@@ -21,13 +21,18 @@ namespace EnglishTeacher.Application.Words.Command.DeleteWord
                 .Where(p => p.Id == request.WordId && p.Status == Status.Active)
                 .FirstOrDefaultAsync(cancellationToken);
             
+            if (word == null)
+            {
+                throw new WordNotFoundException(request.WordId);
+            }
+
             try
             {
                 _context.Words.Remove(word);
             }
             catch (Exception ex)
             {
-                throw new WordNotFoundException(request.WordId, ex);
+                throw;
             }
 
             await _context.SaveChangesAsync(cancellationToken);

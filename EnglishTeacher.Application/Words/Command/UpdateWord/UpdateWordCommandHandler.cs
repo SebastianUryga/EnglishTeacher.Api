@@ -24,7 +24,7 @@ namespace EnglishTeacher.Application.Words.Command.UpdateWord
             var word = await _context.Words.Where(p => p.Id == request.WordId).FirstOrDefaultAsync(cancellationToken);
             if (word == null)
             {
-                throw new WordNotFoundException(request.WordId, new Exception());
+                throw new WordNotFoundException(request.WordId);
             }
             word.EnglishText = request.EnglishText;
             word.PolishText = request.PolishText;

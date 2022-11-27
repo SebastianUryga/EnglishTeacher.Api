@@ -6,7 +6,6 @@ using EnglishTeacher.Application.Words.Query.GetPackOfRandomWords;
 using EnglishTeacher.Application.Words.Query.GetWordDetail;
 using EnglishTeacher.Application.Words.Query.GetWords;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishTeacher.Api.Controllers

@@ -25,7 +25,7 @@ namespace EnglishTeacher.Application.Words.Command.GiveAnswer
                 .FirstOrDefaultAsync(x => x.Status == Status.Active && x.Id == request.WordId, cancellationToken);
 
             if (word == null)
-                throw new WordNotFoundException(request.WordId, new Exception());
+                throw new WordNotFoundException(request.WordId);
 
             var correct = word.EnglishText.Equals(request.Answer);
 

@@ -19,7 +19,9 @@ public class AddSentenceCommandHandler : IRequestHandler<AddSentenceCommand, int
         {
             var word = await _context.Words.FindAsync(request.WordId);
             if (word == null)
-                throw new WordNotFoundException(request.WordId, new Exception());
+            {
+                throw new WordNotFoundException(request.WordId);
+            }
 
             if (!request.EnglishText.Contains(word.EnglishText, StringComparison.OrdinalIgnoreCase))
                 throw new SentenceDoesNotContainRelatedWord(word.EnglishText);

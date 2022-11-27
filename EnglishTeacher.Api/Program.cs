@@ -12,7 +12,9 @@ using Microsoft.OpenApi.Models;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using System.Security.Claims;
+using EnglishTeacher.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -146,6 +148,7 @@ try
             //c.OAuthUsePkce();
         });
     }
+
     app.UseHealthChecks("/hc");
     app.UseHttpsRedirection();
 
@@ -153,6 +156,23 @@ try
 
     app.UseCors();
     app.UseRouting();
+
+    app.UseExceptionHandler("/error");
+
+    app.Map("/error", (IHttpContextAccessor httpContextAccessor) =>
+    {
+        Exception? exception = httpContextAccessor.HttpContext?
+            .Features.Get<IExceptionHandlerFeature>()?
+            .Error;
+
+        return exception is ServiceException e
+            ? Results.Problem(
+                title: e.ErrorMessage,
+                statusCode: e.HttpStatusCode)
+            : Results.Problem(
+                title: "An error occurred while processing your request.",
+                statusCode: StatusCodes.Status500InternalServerError);
+    });
 
     app.UseAuthentication();
     if (app.Environment.IsEnvironment("Test"))
@@ -166,8 +186,9 @@ try
         endpoints.MapControllers();
     });
     //.RequireAuthorization("ApiScope");
+    
 
-        app.Run();
+    app.Run();
 }
 catch(Exception ex)
 {

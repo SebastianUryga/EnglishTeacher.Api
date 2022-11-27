@@ -26,7 +26,7 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
 
             if(word == null)
             {
-                throw new WordNotFoundException(request.WordId, new KeyNotFoundException());
+                throw new WordNotFoundException(request.WordId);
             }
 
             var wordVm = _mapper.Map<WordDetailVm>(word);
