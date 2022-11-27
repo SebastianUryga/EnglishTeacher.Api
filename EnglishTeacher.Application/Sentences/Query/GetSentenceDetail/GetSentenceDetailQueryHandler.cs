@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EnglishTeacher.Application.Common.Exceptions;
 using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Domain.Common;
 using MediatR;
@@ -22,6 +23,11 @@ namespace EnglishTeacher.Application.Sentences.Query.GetSentenceDetail
                 .Where(x => x.Status == Status.Active && x.Id == request.Id)
                 .FirstOrDefaultAsync(cancellationToken);
 
+            if(sentence == null)
+            {
+                throw new SentenceNotFoundException(request.Id, new Exception());
+            } 
+            
             return _mapper.Map<SentenceDetailVm>(sentence);
         }
     }

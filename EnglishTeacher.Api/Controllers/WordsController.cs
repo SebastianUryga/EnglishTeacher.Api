@@ -44,6 +44,7 @@ namespace EnglishTeacher.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Route("{id}")]
         public async Task<ActionResult<WordDetailVm>> GetWord(int id)
         {

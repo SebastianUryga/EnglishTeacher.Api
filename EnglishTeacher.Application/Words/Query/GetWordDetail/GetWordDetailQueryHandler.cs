@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EnglishTeacher.Application.Common.Exceptions;
 using EnglishTeacher.Application.Common.Interfaces;
 using EnglishTeacher.Domain.Common;
 using MediatR;
@@ -22,6 +23,11 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
             var word = await _context.Words
                 .Where(p => p.Id == request.WordId && p.Status == Status.Active)
                 .FirstOrDefaultAsync(cancellationToken);
+
+            if(word == null)
+            {
+                throw new WordNotFoundException(request.WordId, new KeyNotFoundException());
+            }
 
             var wordVm = _mapper.Map<WordDetailVm>(word);
 
