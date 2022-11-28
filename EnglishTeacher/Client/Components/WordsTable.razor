@@ -1,5 +1,7 @@
 ﻿@using EnglishTeacher.Client.Models
+@using System.Net
 @inject IJSRuntime JSRuntime
+@inject HttpClient Http
 @implements IAsyncDisposable
 <h3>WordsTable</h3>
 
@@ -14,6 +16,7 @@
         {
             <tr>
                 <td>@word.PolishText</td>
+                <button @onclick= "() => Delete(word)">Delete</button>
                 <button @onclick= "() => DisplayTranslate(word.EnglishText)">Translate</button>
             </tr>
         }
@@ -31,6 +34,19 @@
     {
         var module = await Module;
         await module.InvokeVoidAsync("displayTranslate", text);
+    }
+
+    async Task Delete(WordDto word)
+    {
+        var response = await Http.DeleteAsync($"api/words?id={word.Id}");
+        var status = response.StatusCode;
+        if (status.Equals(HttpStatusCode.OK))
+            Words.Remove(word);
+        else
+        {
+            var module = await Module;
+            await module.InvokeVoidAsync("deletionFailed");
+        }
     }
 
     public async ValueTask DisposeAsync()
