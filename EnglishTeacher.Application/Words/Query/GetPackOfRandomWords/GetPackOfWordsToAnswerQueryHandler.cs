@@ -11,12 +11,12 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
 {
     public class GetPackOfWordsToAnswerQueryHandler : IRequestHandler<GetPackOfWordsToAnswerQuery, WordsVm>
     {
-        private IWordDbContext _context;
+        private readonly IWordDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IEnumerable<IRandomProbabilityValuePolicy> _policies;
+        private readonly IEnumerable<IWordProbabilityValuePolicy> _policies;
         private readonly IDateTime _dateTime;
 
-        public GetPackOfWordsToAnswerQueryHandler(IWordDbContext context, IMapper mapper, IEnumerable<IRandomProbabilityValuePolicy> policies, IDateTime dateTime)
+        public GetPackOfWordsToAnswerQueryHandler(IWordDbContext context, IMapper mapper, IEnumerable<IWordProbabilityValuePolicy> policies, IDateTime dateTime)
         {
             _context = context;
             _mapper = mapper;
@@ -30,27 +30,23 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
                 .Where(p => p.Status == Status.Active)
                 .ToListAsync(cancellationToken);
 
-            var wordValueDictionary = new Dictionary<Word, double>();
+            var wordValueDictionary = allWords.ToDictionary(word => word, AssignProbabilityValue);
 
-            foreach (var word in allWords)
-            {
-                var sumValuePair = new KeyValuePair<Word, double>(word, 0.0);
-                foreach (var policy in _policies)
-                {
-                    var policyData = new PolicyData(sumValuePair, _dateTime.Now);
-                    if (policy.IsApplicable(policyData))
-                        sumValuePair = policy.SetProbabilityValue(policyData);
-                }
-                wordValueDictionary.Add(sumValuePair.Key, sumValuePair.Value);
-            }
-
-            var chosenWords = wordValueDictionary
+            var hightestValueWords = wordValueDictionary
                 .OrderByDescending(x => x.Value)
                 .Select(x => x.Key)
                 .Take(request.MaxQuantity)
                 .ToList();
 
-            return _mapper.Map<WordsVm>(chosenWords);
+            return _mapper.Map<WordsVm>(hightestValueWords);
+        }
+
+        private double AssignProbabilityValue(Word word)
+        {
+            var policyData = new PolicyData(word, _dateTime.Now);
+            var applicablePolicies = _policies.Where(p => p.IsApplicable(policyData));
+            var valueSum = applicablePolicies.Sum(p => p.CalculateProbabilityValue(policyData));
+            return valueSum;
         }
     }
 }

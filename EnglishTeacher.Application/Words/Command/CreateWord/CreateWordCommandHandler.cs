@@ -5,11 +5,11 @@ using MediatR;
 
 namespace EnglishTeacher.Application.Words.Command.CreateWord
 {
-    public class CreateWordComandHandler : IRequestHandler<CreateWordCommand, int>
+    public class CreateWordCommandHandler : IRequestHandler<CreateWordCommand, int>
     {
         private readonly IWordDbContext _context;
 
-        public CreateWordComandHandler(IWordDbContext wordDbContext)
+        public CreateWordCommandHandler(IWordDbContext wordDbContext)
         {
             _context = wordDbContext;
         }

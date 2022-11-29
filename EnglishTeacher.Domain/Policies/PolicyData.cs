@@ -2,5 +2,5 @@
 
 namespace EnglishTeacher.Domain.Policies
 {
-    public record PolicyData (KeyValuePair<Word, double> WordValuePair, DateTime Now);
+    public record PolicyData (Word Word, DateTime Now);
 }

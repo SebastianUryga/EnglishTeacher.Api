@@ -1,22 +1,20 @@
-﻿using System.Data.Common;
-using EnglishTeacher.Domain.Entities;
-
-namespace EnglishTeacher.Domain.Policies
+﻿namespace EnglishTeacher.Domain.Policies
 {
-    public class UnpracticedWordsPolicy : IRandomProbabilityValuePolicy
+    public class UnpracticedWordsPolicy : IWordProbabilityValuePolicy
     {
         private const double _factor = 100.0;
 
         public bool IsApplicable(PolicyData data)
         {
-            var stat = data.WordValuePair.Key.AnsweringStatistics;
+            var stat = data.Word.AnsweringStatistics;
             return stat.CorrectAnswers + stat.WrongAnswers < 5;
         }
 
-        public KeyValuePair<Word, double> SetProbabilityValue(PolicyData data)
+        public double CalculateProbabilityValue(PolicyData data)
         {
-            var pair = data.WordValuePair;
-            return new KeyValuePair<Word, double>(pair.Key,pair.Value + _factor);
+            var stat = data.Word.AnsweringStatistics;
+            var sumOfAnswers = stat.CorrectAnswers + stat.WrongAnswers;
+            return _factor / (sumOfAnswers + 1);
         }
     }
 }

@@ -16,9 +16,9 @@ namespace EnglishTeacher.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            services.AddSingleton<IRandomProbabilityValuePolicy, RatioOfCorrectAnswersPolicy>();
-            services.AddSingleton<IRandomProbabilityValuePolicy, TimePassedSinceLastAnswerPolicy>();
-            services.AddSingleton<IRandomProbabilityValuePolicy, UnpracticedWordsPolicy>();
+            services.AddSingleton<IWordProbabilityValuePolicy, ProportionOfCorrectAnswersPolicy>();
+            services.AddSingleton<IWordProbabilityValuePolicy, TimePassedSinceLastAnswerPolicy>();
+            services.AddSingleton<IWordProbabilityValuePolicy, UnpracticedWordsPolicy>();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehaviour<>));

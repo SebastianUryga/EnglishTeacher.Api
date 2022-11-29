@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using EnglishTeacher.Domain.Common;
+using System.Collections.Generic;
 
 namespace Application.UnitTests.Common
 {
@@ -37,9 +38,9 @@ namespace Application.UnitTests.Common
                 PolishText = "Mysz",
                 AnsweringStatistics = new EnglishTeacher.Domain.ValueObjects.AnsweringStatistics
                 {
-                    CorrectAnswers = 0,
-                    WrongAnswers = 0,
-                    LastAnswer = dateTime
+                    CorrectAnswers = 5,
+                    WrongAnswers = 1,
+                    LastAnswer = dateTime.AddDays(-1)
                 }, 
             };
 
@@ -51,12 +52,42 @@ namespace Application.UnitTests.Common
                 PolishText = "Usuń",
                 AnsweringStatistics = new EnglishTeacher.Domain.ValueObjects.AnsweringStatistics
                 {
-                    CorrectAnswers = 0,
-                    WrongAnswers = 0,
-                    LastAnswer = dateTime
+                    CorrectAnswers = 6,
+                    WrongAnswers = 3,
+                    LastAnswer = dateTime.AddDays(-2)
                 },
             };
 
+            var words = new List<EnglishTeacher.Domain.Entities.Word>()
+            {
+                new EnglishTeacher.Domain.Entities.Word
+                {
+                    Status = Status.Active,
+                    CreatedBy = "Admin",
+                    EnglishText = "First",
+                    PolishText = "Pierwszy",
+                    AnsweringStatistics = new()
+                    {
+                        CorrectAnswers = 4,
+                        WrongAnswers = 0,
+                        LastAnswer = dateTime.AddDays(-4)
+                    }
+                },
+                new EnglishTeacher.Domain.Entities.Word
+                {
+                    Status = Status.Active,
+                    CreatedBy = "Admin",
+                    EnglishText = "Second",
+                    PolishText = "Drugi",
+                    AnsweringStatistics = new()
+                    {
+                        CorrectAnswers = 20,
+                        WrongAnswers = 3,
+                        LastAnswer = dateTime.AddDays(-5)
+                    }
+                }
+            };
+            context.Words.AddRange(words);
             context.Words.Add(word2);
             context.Words.Add(word1);
 

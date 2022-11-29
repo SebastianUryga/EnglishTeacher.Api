@@ -11,12 +11,12 @@ namespace Application.UnitTests.Word
 {
     public class CreateWordCommandHandlerTest : CommandTestBase
     {
-        private CreateWordComandHandler _handler;
+        private CreateWordCommandHandler _handler;
 
         public CreateWordCommandHandlerTest()
             :base()
         {
-            _handler = new CreateWordComandHandler(_context);
+            _handler = new CreateWordCommandHandler(_context);
         }
 
         [Fact]

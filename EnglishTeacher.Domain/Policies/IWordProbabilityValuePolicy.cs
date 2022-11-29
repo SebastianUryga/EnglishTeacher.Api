@@ -2,10 +2,10 @@
 
 namespace EnglishTeacher.Domain.Policies
 {
-    public interface IRandomProbabilityValuePolicy
+    public interface IWordProbabilityValuePolicy
     {
         bool IsApplicable(PolicyData data);
 
-        KeyValuePair<Word, double> SetProbabilityValue(PolicyData data);
+        double CalculateProbabilityValue(PolicyData data);
     }
 }
