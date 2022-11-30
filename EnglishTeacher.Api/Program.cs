@@ -13,6 +13,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using System.Security.Claims;
 using EnglishTeacher.Application.Common.Exceptions;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -165,11 +166,17 @@ try
             .Features.Get<IExceptionHandlerFeature>()?
             .Error;
 
-        return exception is ServiceException e
+        return exception is ServiceException se
             ? Results.Problem(
-                title: e.ErrorMessage,
-                statusCode: e.HttpStatusCode)
-            : Results.Problem(
+                title: "Not found or business exception Thrown.",
+                statusCode: se.HttpStatusCode,
+                detail: se.ErrorMessage)
+            : exception is ValidationException ex
+                ? Results.Problem(
+                    title: "One or more validation errors occurred.",
+                    statusCode: StatusCodes.Status400BadRequest,
+                    detail: ex.Message)
+                : Results.Problem(
                 title: "An error occurred while processing your request.",
                 statusCode: StatusCodes.Status500InternalServerError);
     });
@@ -186,11 +193,11 @@ try
         endpoints.MapControllers();
     });
     //.RequireAuthorization("ApiScope");
-    
+
 
     app.Run();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Log.Fatal(ex, "Application couldn't start up");
 }
