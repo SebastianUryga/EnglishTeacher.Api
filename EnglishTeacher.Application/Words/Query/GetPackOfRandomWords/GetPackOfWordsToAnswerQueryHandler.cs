@@ -30,7 +30,7 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
                 .Where(p => p.Status == Status.Active)
                 .ToListAsync(cancellationToken);
 
-            var wordValueDictionary = allWords.ToDictionary(word => word, AssignProbabilityValue);
+            var wordValueDictionary = allWords.ToDictionary(word => word, GetSumOfProbabilityValueForWord);
 
             var hightestValueWords = wordValueDictionary
                 .OrderByDescending(x => x.Value)
@@ -41,7 +41,7 @@ namespace EnglishTeacher.Application.Words.Query.GetPackOfRandomWords
             return _mapper.Map<WordsVm>(hightestValueWords);
         }
 
-        private double AssignProbabilityValue(Word word)
+        private double GetSumOfProbabilityValueForWord(Word word)
         {
             var policyData = new PolicyData(word, _dateTime.Now);
             var applicablePolicies = _policies.Where(p => p.IsApplicable(policyData));
