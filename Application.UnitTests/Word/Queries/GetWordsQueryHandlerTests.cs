@@ -28,6 +28,6 @@ public class GetWordsQueryHandlerTests
         var result = await handler.Handle(new GetWordsQuery(), CancellationToken.None);
 
         result.ShouldBeOfType<WordsVm>();
-        result.Words.Count.ShouldBe(3);
+        result.Words.Count.ShouldBe(6);
     }
 }

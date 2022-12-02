@@ -30,7 +30,7 @@ namespace Application.UnitTests.Word.Queries
             var result = await handler.Handle(new GetWordDetailQuery { WordId = wordId }, CancellationToken.None);
 
             result.ShouldBeOfType<WordDetailVm>();
-            result.EnglishText.ShouldBe("Mouse");
+            result.EnglishText.ShouldNotBeEmpty();
         }
     }
 }

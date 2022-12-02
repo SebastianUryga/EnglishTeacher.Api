@@ -85,6 +85,19 @@ namespace Application.UnitTests.Common
                         WrongAnswers = 3,
                         LastAnswer = dateTime.AddDays(-5)
                     }
+                },
+                new EnglishTeacher.Domain.Entities.Word
+                {
+                    Status = Status.Active,
+                    CreatedBy = "Admin",
+                    EnglishText = "Third",
+                    PolishText = "Trzeci",
+                    AnsweringStatistics = new()
+                    {
+                        CorrectAnswers = 7,
+                        WrongAnswers = 3,
+                        LastAnswer = dateTime.AddDays(-3)
+                    }
                 }
             };
             context.Words.AddRange(words);

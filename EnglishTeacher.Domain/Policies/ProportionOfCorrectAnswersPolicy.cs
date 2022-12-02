@@ -5,7 +5,7 @@ namespace EnglishTeacher.Domain.Policies
 {
     public class ProportionOfCorrectAnswersPolicy : IWordProbabilityValuePolicy
     {
-        private const double _factory = 0.1;
+        private const double _factory = 0.15;
         public bool IsApplicable(PolicyData data)
         {
             var stat = data.Word.AnsweringStatistics;

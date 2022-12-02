@@ -4,7 +4,7 @@ namespace EnglishTeacher.Domain.Policies
 {
     public class TimePassedSinceLastAnswerPolicy : IWordProbabilityValuePolicy
     {
-        private const double _factor = 0.01;
+        private const double _factor = 0.02;
         public bool IsApplicable(PolicyData data)
             => true;
 

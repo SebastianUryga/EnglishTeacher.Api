@@ -30,8 +30,8 @@ namespace WebApi.IntegrationTests.Common
                 PolishText = "Mysz",
                 AnsweringStatistics = new EnglishTeacher.Domain.ValueObjects.AnsweringStatistics
                 {
-                    CorrectAnswers = 0,
-                    WrongAnswers = 0,
+                    CorrectAnswers = 15,
+                    WrongAnswers = 1,
                     LastAnswer = DateTime.Now
                 },
             };
