@@ -8,6 +8,7 @@ using Xunit;
 using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
+using EnglishTeacher.Domain.ValueObjects;
 
 namespace Application.UnitTests.Policy
 {
@@ -38,6 +39,35 @@ namespace Application.UnitTests.Policy
 
             actions.ForAll(x => x.ShouldNotThrow());
         }
+
+        [Theory]
+        [MemberData(nameof(WordsAnswerStatistics))]
+        public void ComperingProbalityValues_ForTwoValidWords_FirstOneShuldBeGrather(int corrAns1, int wrongAns1, int time1, int corrAns2, int wrongAns2, int time2)
+        {
+            var word1 = _testWords.ElementAt(0);
+            var word2 = _testWords.ElementAt(1);
+            word1.AnsweringStatistics.CorrectAnswers = corrAns1;
+            word1.AnsweringStatistics.WrongAnswers = wrongAns1;
+            word1.AnsweringStatistics.LastAnswer = _dateTime.Now.AddDays(-time1);
+
+            word2.AnsweringStatistics.CorrectAnswers = corrAns2;
+            word2.AnsweringStatistics.WrongAnswers = wrongAns2;
+            word2.AnsweringStatistics.LastAnswer = _dateTime.Now.AddDays(-time2);
+
+            var sum1 = GetSumOfProbalityValueForWord(word1);
+            var sum2 = GetSumOfProbalityValueForWord(word2);
+            sum1.ShouldBeGreaterThan(sum2);
+
+        }
+
+        public static IEnumerable<object[]> WordsAnswerStatistics =>
+        new List<object[]>
+        {
+            new object[]{20,4,2, 20,3,2},
+            new object[]{20,4,2, 25,4,2},
+            new object[]{20,4,2, 20,5,1},
+            new object[]{2,0,1, 2,5,7},
+        };
 
         private double GetSumOfProbalityValueForWord(EnglishTeacher.Domain.Entities.Word word)
         {

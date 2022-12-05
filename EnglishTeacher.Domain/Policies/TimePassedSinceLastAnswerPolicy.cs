@@ -6,7 +6,11 @@ namespace EnglishTeacher.Domain.Policies
     {
         private const double _factor = 0.02;
         public bool IsApplicable(PolicyData data)
-            => true;
+        {
+            var lastAnswerDate = data.Word.AnsweringStatistics.LastAnswer;
+
+            return data.Now > lastAnswerDate ;
+        }
 
         public double CalculateProbabilityValue(PolicyData data)
         {
