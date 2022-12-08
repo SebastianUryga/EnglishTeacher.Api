@@ -8,5 +8,6 @@ namespace EnglishTeacher.Domain.Entities
         public string PolishText { get; set; }
         public string EnglishText { get; set; }
         public AnsweringStatistics AnsweringStatistics { get; set; }
+        public ICollection<Answer> AnswersHistory { get; private set; }
     }
 }

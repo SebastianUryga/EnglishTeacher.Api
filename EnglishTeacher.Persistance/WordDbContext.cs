@@ -22,6 +22,7 @@ namespace EnglishTeacher.Persistance
 
         public DbSet<Word> Words { get; set; }
         public DbSet<Sentence> Sentences { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

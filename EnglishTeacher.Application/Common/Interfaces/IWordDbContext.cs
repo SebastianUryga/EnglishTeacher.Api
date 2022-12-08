@@ -8,6 +8,7 @@ namespace EnglishTeacher.Application.Common.Interfaces
     {
         DbSet<Word> Words { get; set; }
         DbSet<Sentence> Sentences { get; set; }
+        DbSet<Answer> Answers { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

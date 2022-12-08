@@ -22,6 +22,7 @@ namespace EnglishTeacher.Application.Words.Query.GetWordDetail
         {
             var word = await _context.Words
                 .Where(p => p.Id == request.WordId && p.Status == Status.Active)
+                .Include(r => r.AnswersHistory)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if(word == null)

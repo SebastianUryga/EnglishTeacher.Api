@@ -27,7 +27,18 @@ namespace EnglishTeacher.Application.Words.Command.GiveAnswer
             if (word == null)
                 throw new WordNotFoundException(request.WordId);
 
-            var correct = word.EnglishText.Equals(request.Answer);
+            var answer = new Answer()
+            {
+                WordId = word.Id,
+                AnswerText = request.Answer,
+                AnswerDate = _dateTime.Now
+            };
+            
+            _context.Answers.Add(answer);
+            
+            //word.AnswersHistory.Add(answer);
+
+            var correct = word.EnglishText.Equals(request.Answer, StringComparison.OrdinalIgnoreCase);
 
             if (correct)
             {
